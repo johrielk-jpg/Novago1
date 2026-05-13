@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Novago — Ta carrière, sans frontières</title>
+<meta name="description" content="La plateforme des Français qui veulent travailler à l'étranger. Mentors expats, offres d'emploi, communauté."/>
+<meta name="theme-color" content="#52d2c4"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Novago"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" href="icon-192.png"/>
+<!-- Open Graph -->
+<meta property="og:title" content="Novago — Ta carrière, sans frontières"/>
+<meta property="og:description" content="Mentors expats, offres d'emploi internationales, communauté française."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://novago-app.com"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── THEME VARIABLES ── */
+:root {
+  --bg:#07090f; --bg2:#0d0f18; --surface:rgba(255,255,255,0.03); --surface2:rgba(255,255,255,0.06);
+  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.13);
+  --text:#eeeae4; --text2:#9ca3af; --muted:#6b7280; --faint:#1a1d25;
+  --accent:#52d2c4; --ac-dim:rgba(82,210,196,0.11); --ac-b:rgba(82,210,196,0.24);
+  --gold:#e8c97a; --go-dim:rgba(232,201,122,0.09); --go-b:rgba(232,201,122,0.24);
+  --violet:#a78bfa; --vi-dim:rgba(167,139,250,0.09); --vi-b:rgba(167,139,250,0.24);
+  --rose:#fb7185; --ro-dim:rgba(251,113,133,0.09); --ro-b:rgba(251,113,133,0.24);
+  --green:#4ade80; --red:#f87171;
+  --nav-h:62px; --r:20px; --r-sm:12px;
+  --shadow:0 4px 24px rgba(0,0,0,0.4);
+}
+[data-theme="light"] {
+  --bg:#f8f7f4; --bg2:#ffffff; --surface:rgba(0,0,0,0.03); --surface2:rgba(0,0,0,0.06);
+  --border:rgba(0,0,0,0.08); --border2:rgba(0,0,0,0.14);
+  --text:#0f0f0f; --text2:#4b5563; --muted:#9ca3af; --faint:#e5e7eb;
+  --ac-dim:rgba(14,116,108,0.08); --ac-b:rgba(14,116,108,0.2);
+  --go-dim:rgba(161,128,20,0.08); --go-b:rgba(161,128,20,0.2);
+  --vi-dim:rgba(109,40,217,0.08); --vi-b:rgba(109,40,217,0.2);
+  --ro-dim:rgba(225,29,72,0.08); --ro-b:rgba(225,29,72,0.2);
+  --accent:#0e746c; --gold:#a18014; --violet:#6d28d9; --rose:#e11d48;
+  --green:#15803d; --faint:#f3f4f6;
+  --shadow:0 4px 24px rgba(0,0,0,0.1);
+}
+[dir="rtl"] { text-align: right; }
+
+/* ── RESET & BASE ── */
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;line-height:1.6;transition:background 0.3s,color 0.3s;}
+::-webkit-scrollbar{width:3px;} ::-webkit-scrollbar-track{background:var(--bg);} ::-webkit-scrollbar-thumb{background:var(--faint);border-radius:2px;}
+a{color:inherit;text-decoration:none;} button{cursor:pointer;font-family:'DM Sans',sans-serif;}
+img{max-width:100%;}
+
+/* ── ANIMATIONS ── */
+@keyframes fi{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(82,210,196,0.5)}70%{box-shadow:0 0 0 8px rgba(82,210,196,0)}100%{box-shadow:0 0 0 0 rgba(82,210,196,0)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes grain{0%,100%{transform:translate(0,0)}20%{transform:translate(-1%,-2%)}40%{transform:translate(2%,1%)}60%{transform:translate(-1%,3%)}80%{transform:translate(1%,-1%)}}
+
+.page{display:none;animation:fi 0.32s ease both;}
+.page.active{display:block;}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+body::before{content:'';position:fixed;inset:0;z-index:999;pointer-events:none;opacity:0.016;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+animation:grain 0.5s steps(1) infinite;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:var(--nav-h);padding:0 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(7,9,15,0.9);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
+[data-theme="light"] nav{background:rgba(248,247,244,0.92);}
+.logo{display:flex;align-items:center;gap:9px;cursor:pointer;}
+.logo-mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#52d2c4,#2aa89c);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:12px;color:#07090f;letter-spacing:-0.5px;flex-shrink:0;}
+.logo-text{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;letter-spacing:-0.3px;}
+.nav-links{display:flex;gap:2px;align-items:center;}
+.nav-link{padding:7px 13px;border-radius:9px;font-size:13px;font-weight:500;color:var(--muted);background:none;border:none;transition:color 0.15s,background 0.15s;}
+.nav-link:hover,.nav-link.active{color:var(--text);background:var(--surface2);}
+.nav-actions{display:flex;gap:8px;align-items:center;}
+.nav-cta{padding:9px 18px;border-radius:10px;background:var(--ac-dim);border:1px solid var(--ac-b);color:var(--accent);font-family:'Syne',sans-serif;font-weight:700;font-size:13px;transition:all 0.2s;}
+.nav-cta:hover{background:rgba(82,210,196,0.18);}
+.icon-btn{width:36px;height:36px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);display:flex;align-items:center;justify-content:center;font-size:16px;transition:all 0.15s;}
+.icon-btn:hover{border-color:var(--border2);color:var(--text);}
+.hamburger{display:none;background:none;border:none;color:var(--text);font-size:22px;padding:4px;}
+
+/* ── LANG SELECTOR ── */
+.lang-wrap{position:relative;}
+.lang-btn{display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:13px;font-weight:600;transition:all 0.15s;}
+.lang-btn:hover{border-color:var(--border2);}
+.lang-drop{position:absolute;top:calc(100% + 6px);right:0;background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:6px;min-width:140px;box-shadow:var(--shadow);z-index:600;display:none;}
+.lang-drop.open{display:block;animation:fi 0.2s ease;}
+.lang-opt{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:9px;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;transition:background 0.15s;}
+.lang-opt:hover,.lang-opt.active{background:var(--surface2);color:var(--text);}
+
+/* ── MOBILE MENU ── */
+.mobile-menu{display:none;position:fixed;top:var(--nav-h);left:0;right:0;z-index:499;background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px 16px;flex-direction:column;gap:4px;}
+.mobile-menu.open{display:flex;}
+
+/* ── PWA INSTALL BANNER ── */
+.pwa-banner{display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:600;background:var(--bg2);border:1px solid var(--ac-b);border-radius:16px;padding:14px 20px;box-shadow:var(--shadow);max-width:360px;width:calc(100% - 32px);animation:fi 0.4s ease;}
+.pwa-banner.show{display:flex;gap:12px;align-items:center;}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:calc(var(--nav-h) + 60px) 24px 80px;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 55% at 50% -5%,rgba(82,210,196,0.12) 0%,transparent 65%),radial-gradient(ellipse 40% 30% at 85% 65%,rgba(167,139,250,0.06) 0%,transparent 60%);}
+[data-theme="light"] .hero-bg{background:radial-gradient(ellipse 80% 55% at 50% -5%,rgba(14,116,108,0.07) 0%,transparent 65%);}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(82,210,196,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(82,210,196,0.025) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 85% 85% at 50% 50%,black 0%,transparent 70%);}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;border-radius:100px;background:var(--ac-dim);border:1px solid var(--ac-b);font-size:12px;font-weight:600;color:var(--accent);margin-bottom:28px;animation:fi 0.8s ease 0.2s both;}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse-ring 2s infinite;flex-shrink:0;}
+h1.hero-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(44px,8vw,90px);line-height:0.95;letter-spacing:-3px;margin-bottom:10px;animation:fi 0.8s ease 0.4s both;}
+h1.hero-title em{font-style:italic;font-family:'DM Sans',sans-serif;font-weight:300;color:var(--accent);letter-spacing:-2px;}
+.hero-sub{font-size:clamp(15px,2vw,19px);color:var(--text2);font-weight:300;max-width:580px;margin:0 auto 48px;line-height:1.75;animation:fi 0.8s ease 0.6s both;}
+.hero-sub strong{color:var(--text);font-weight:500;}
+.hero-form{display:flex;gap:10px;max-width:500px;width:100%;animation:fi 0.8s ease 0.8s both;}
+.hero-input{flex:1;padding:15px 20px;border-radius:14px;background:var(--surface2);border:1px solid var(--border2);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;transition:border 0.2s;}
+.hero-input:focus{border-color:var(--ac-b);}
+.hero-input::placeholder{color:var(--muted);}
+.hero-btn{padding:15px 26px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#2aa89c);border:none;color:#07090f;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;white-space:nowrap;transition:opacity 0.2s,transform 0.15s;}
+.hero-btn:hover{opacity:0.9;transform:translateY(-1px);}
+.hero-count{margin-top:18px;font-size:13px;color:var(--muted);animation:fi 0.8s ease 1s both;}
+.hero-count strong{color:var(--text);}
+.success-wrap{display:none;flex-direction:column;align-items:center;gap:10px;animation:fi 0.4s ease both;}
+.success-icon{width:56px;height:56px;border-radius:18px;background:var(--ac-dim);border:1px solid var(--ac-b);display:flex;align-items:center;justify-content:center;font-size:24px;}
+
+/* ── MARQUEE ── */
+.marquee-wrap{padding:28px 0;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.marquee-track{display:flex;width:max-content;animation:marquee 32s linear infinite;}
+.marquee-item{display:flex;align-items:center;gap:10px;padding:0 28px;font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap;}
+.marquee-sep{width:4px;height:4px;border-radius:50%;background:var(--accent);opacity:0.4;flex-shrink:0;}
+
+/* ── SECTION ── */
+.section{padding:100px 48px;max-width:1160px;margin:0 auto;}
+.section-sm{padding:80px 48px;max-width:900px;margin:0 auto;}
+.label{font-size:10px;font-family:'Syne',sans-serif;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:block;}
+h2.title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(28px,4vw,52px);letter-spacing:-1.5px;line-height:1.08;margin-bottom:18px;}
+h2.title em{font-style:italic;font-family:'DM Sans',sans-serif;font-weight:300;color:var(--accent);}
+.subtitle{font-size:17px;color:var(--text2);max-width:540px;font-weight:300;line-height:1.75;}
+
+/* ── CARDS ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);transition:border-color 0.2s,transform 0.2s;}
+.card:hover{border-color:var(--border2);}
+
+/* ── STEPS ── */
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:56px;}
+.step{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px;position:relative;overflow:hidden;transition:border-color 0.2s;}
+.step:hover{border-color:var(--ac-b);}
+.step-n{font-family:'Syne',sans-serif;font-weight:800;font-size:68px;line-height:1;color:rgba(82,210,196,0.07);position:absolute;top:8px;right:16px;}
+.step h3{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;}
+.step p{font-size:14px;color:var(--text2);line-height:1.75;}
+
+/* ── STATS ── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-top:56px;}
+.stat{background:var(--bg);padding:36px 26px;}
+.stat-n{font-family:'Syne',sans-serif;font-size:clamp(34px,4vw,52px);font-weight:800;color:var(--accent);letter-spacing:-2px;line-height:1;}
+.stat-l{font-size:14px;color:var(--text2);margin-top:6px;}
+
+/* ── MENTOR CARDS ── */
+.mentors-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;margin-top:52px;}
+.mcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;position:relative;overflow:hidden;transition:all 0.2s;cursor:pointer;}
+.mcard:hover{border-color:var(--ac-b);transform:translateY(-3px);}
+.mcard-bar{position:absolute;top:0;left:0;right:0;height:2px;}
+.mcard-av{width:48px;height:48px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;flex-shrink:0;}
+.mcard-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:2px;}
+.mcard-role{font-size:12px;color:var(--text2);}
+.mcard-bio{font-size:13px;color:var(--text2);font-style:italic;line-height:1.6;margin:10px 0;}
+.tag{padding:3px 9px;border-radius:7px;font-size:10px;font-weight:600;background:var(--ac-dim);color:var(--accent);border:1px solid var(--ac-b);}
+.avail-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse-ring 2s infinite;flex-shrink:0;}
+
+/* ── TESTIMONIALS ── */
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;margin-top:50px;}
+.testi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;}
+.testi-text{font-size:15px;color:var(--text2);line-height:1.78;margin-bottom:18px;font-style:italic;}
+.testi-av{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:#07090f;flex-shrink:0;}
+
+/* ── PRICING ── */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:48px;}
+.pcard{border-radius:var(--r);padding:26px;position:relative;overflow:hidden;transition:transform 0.2s;}
+.pcard:hover{transform:translateY(-4px);}
+.pcard-bar{position:absolute;top:0;left:0;right:0;height:2px;}
+.pcard-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;margin-bottom:4px;}
+.pcard-price{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:20px;line-height:1;}
+.pcard-price span{font-size:13px;font-weight:400;color:var(--muted);}
+.pcard-feat{display:flex;flex-direction:column;gap:9px;margin-bottom:20px;}
+.feat-row{display:flex;gap:9px;align-items:flex-start;font-size:13px;line-height:1.5;}
+.feat-check{font-size:13px;flex-shrink:0;}
+.feat-note{font-size:10px;font-weight:700;margin-left:3px;}
+.pcard-btn{width:100%;padding:13px;border-radius:13px;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;border:none;cursor:pointer;transition:opacity 0.2s;}
+.popular-badge{position:absolute;top:14px;right:14px;padding:3px 9px;border-radius:7px;font-size:9px;font-weight:800;font-family:'Syne',sans-serif;letter-spacing:1px;text-transform:uppercase;}
+.bill-toggle{display:flex;justify-content:center;gap:8px;margin-bottom:36px;}
+.bill-btn{padding:8px 20px;border-radius:10px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.15s;}
+.bill-btn.active{background:var(--go-dim);border-color:var(--go-b);color:var(--gold);}
+
+/* ── JOBS PAGE ── */
+.jobs-header{padding:calc(var(--nav-h) + 40px) 48px 0;max-width:1160px;margin:0 auto;}
+.jobs-controls{padding:24px 48px;max-width:1160px;margin:0 auto;display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+.jobs-grid{padding:0 48px 80px;max-width:1160px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:24px;}
+.search-bar{flex:1;min-width:200px;display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid var(--border2);border-radius:12px;padding:10px 16px;}
+.search-bar input{background:none;border:none;outline:none;color:var(--text);font-size:14px;width:100%;font-family:'DM Sans',sans-serif;}
+.search-bar input::placeholder{color:var(--muted);}
+.filter-select{padding:10px 14px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;cursor:pointer;}
+.job-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;transition:all 0.2s;cursor:pointer;position:relative;}
+.job-card:hover{border-color:var(--ac-b);transform:translateY(-2px);}
+.job-logo{width:44px;height:44px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.job-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:3px;line-height:1.3;}
+.job-company{font-size:13px;color:var(--text2);margin-bottom:8px;}
+.match-bar-wrap{display:flex;align-items:center;gap:8px;margin-top:10px;}
+.match-bar-bg{flex:1;height:3px;background:var(--faint);border-radius:2px;overflow:hidden;}
+.match-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),#2aa89c);transition:width 0.8s ease;}
+.apply-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#2aa89c);color:#07090f;font-family:'Syne',sans-serif;font-weight:800;font-size:12px;border:none;cursor:pointer;transition:opacity 0.2s;text-decoration:none;}
+.apply-btn:hover{opacity:0.88;}
+.badge{padding:3px 9px;border-radius:7px;font-size:10px;font-weight:700;}
+.loader{display:flex;justify-content:center;align-items:center;padding:60px;gap:10px;color:var(--text2);font-size:14px;}
+.spinner{width:20px;height:20px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;}
+.no-results{text-align:center;padding:60px 24px;color:var(--text2);}
+
+/* ── FAQ ── */
+.faq-list{margin-top:44px;display:flex;flex-direction:column;gap:2px;}
+.faq-item{border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color 0.2s;}
+.faq-item.open,.faq-item:hover{border-color:var(--ac-b);}
+.faq-q{width:100%;padding:18px 22px;background:none;border:none;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer;}
+.faq-item.open .faq-q{color:var(--accent);}
+.faq-arrow{font-size:14px;transition:transform 0.25s;color:var(--muted);flex-shrink:0;}
+.faq-item.open .faq-arrow{transform:rotate(180deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.38s ease,padding 0.28s;}
+.faq-item.open .faq-a{max-height:280px;padding:0 22px 20px;}
+.faq-a p{font-size:14px;color:var(--text2);line-height:1.8;}
+.faq-a strong{color:var(--text);}
+
+/* ── LEGAL ── */
+.legal-wrap{max-width:740px;margin:0 auto;padding:calc(var(--nav-h) + 60px) 48px 80px;}
+.legal-wrap h1{font-family:'Syne',sans-serif;font-size:34px;font-weight:800;letter-spacing:-1px;margin-bottom:8px;}
+.legal-date{font-size:13px;color:var(--muted);margin-bottom:44px;padding-bottom:22px;border-bottom:1px solid var(--border);}
+.legal-wrap h2{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin:34px 0 10px;color:var(--accent);}
+.legal-wrap h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin:20px 0 7px;}
+.legal-wrap p,.legal-wrap li{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:10px;}
+.legal-wrap ul{padding-left:18px;margin-bottom:10px;}
+.legal-wrap a{color:var(--accent);text-decoration:underline;text-underline-offset:3px;}
+.legal-table{width:100%;border-collapse:collapse;margin:14px 0 22px;font-size:13px;}
+.legal-table th{text-align:left;padding:9px 13px;font-family:'Syne',sans-serif;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:1px;font-size:11px;}
+.legal-table td{padding:11px 13px;color:var(--text2);border-bottom:1px solid rgba(255,255,255,0.03);}
+[data-theme="light"] .legal-table td{border-bottom:1px solid rgba(0,0,0,0.04);}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:44px 48px;display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:44px;}
+.footer-brand p{font-size:13px;color:var(--text2);margin-top:10px;max-width:220px;line-height:1.7;}
+.footer-col h4{font-family:'Syne',sans-serif;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.footer-col a{display:block;font-size:13px;color:var(--muted);margin-bottom:8px;transition:color 0.15s;cursor:pointer;}
+.footer-col a:hover{color:var(--text);}
+.footer-bottom{border-top:1px solid var(--border);padding:18px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.footer-bottom p{font-size:12px;color:var(--muted);}
+
+/* ── BECOME MENTOR ── */
+.become-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+.become-feat{display:flex;gap:14px;padding:16px 18px;background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:12px;}
+.bfeat-icon{width:36px;height:36px;border-radius:10px;background:var(--ac-dim);border:1px solid var(--ac-b);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.bfeat-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-bottom:2px;}
+.bfeat-desc{font-size:12px;color:var(--text2);}
+
+/* ── PHONE MOCKUP ── */
+.phone-wrap{display:flex;justify-content:center;}
+.phone-frame{width:238px;background:var(--bg2);border:1px solid var(--border2);border-radius:36px;padding:14px;box-shadow:var(--shadow);animation:float 4s ease-in-out infinite;}
+.phone-screen{background:var(--bg);border-radius:24px;overflow:hidden;aspect-ratio:9/19.5;position:relative;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  nav{padding:0 16px;}
+  .nav-links{display:none;}
+  .hamburger{display:block;}
+  .section,.section-sm{padding:70px 20px;}
+  .jobs-header,.jobs-controls{padding-left:20px;padding-right:20px;}
+  .jobs-grid{padding-left:20px;padding-right:20px;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .become-grid{grid-template-columns:1fr;}
+  footer{grid-template-columns:1fr 1fr;gap:28px;}
+  .footer-bottom{padding:16px 20px;}
+  .legal-wrap{padding:calc(var(--nav-h)+40px) 20px 60px;}
+}
+@media(max-width:600px){
+  .hero-form{flex-direction:column;}
+  .hero-btn{width:100%;padding:16px;}
+  .pricing-grid{grid-template-columns:1fr;}
+  .steps-grid{grid-template-columns:1fr;}
+  .testi-grid{grid-template-columns:1fr;}
+  .mentors-grid{grid-template-columns:1fr;}
+  footer{grid-template-columns:1fr;}
+  .jobs-controls{flex-direction:column;align-items:stretch;}
+  .search-bar{min-width:unset;}
+  h1.hero-title{letter-spacing:-2px;}
+}
+/* ── iOS safe area ── */
+@supports(padding:max(0px)){
+  nav{padding-top:max(0px,env(safe-area-inset-top));height:calc(var(--nav-h) + max(0px,env(safe-area-inset-top)));}
+  footer{padding-bottom:max(44px,env(safe-area-inset-bottom));}
+}
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- ══════════════════════════════════
+     NAVIGATION
+══════════════════════════════════ -->
+<nav id="main-nav">
+  <div class="logo" onclick="showPage('home')">
+    <div class="logo-mark">N→</div>
+    <span class="logo-text">novago</span>
+  </div>
+  <div class="nav-links" id="nav-links">
+    <button class="nav-link" onclick="showPage('home')" data-i18n="nav_home">Accueil</button>
+    <button class="nav-link" onclick="showPage('app')" data-i18n="nav_app">L'app</button>
+    <button class="nav-link" onclick="showPage('jobs')" data-i18n="nav_jobs">Offres</button>
+    <button class="nav-link" onclick="showPage('pricing')" data-i18n="nav_pricing">Tarifs</button>
+    <button class="nav-link" onclick="showPage('faq')" data-i18n="nav_faq">FAQ</button>
+    <button class="nav-link" onclick="showPage('legal')" data-i18n="nav_legal">Légal</button>
+  </div>
+  <div class="nav-actions">
+    <!-- Theme toggle -->
+    <button class="icon-btn" id="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme" title="Mode jour/nuit">🌙</button>
+    <!-- Language -->
+    <div class="lang-wrap">
+      <button class="lang-btn" onclick="toggleLangDrop()" id="lang-btn">🇫🇷 FR ▾</button>
+      <div class="lang-drop" id="lang-drop">
+        <div class="lang-opt active" onclick="setLang('fr')">🇫🇷 Français</div>
+        <div class="lang-opt" onclick="setLang('en')">🇬🇧 English</div>
+        <div class="lang-opt" onclick="setLang('de')">🇩🇪 Deutsch</div>
+        <div class="lang-opt" onclick="setLang('es')">🇪🇸 Español</div>
+        <div class="lang-opt" onclick="setLang('pt')">🇵🇹 Português</div>
+        <div class="lang-opt" onclick="setLang('ar')">🇸🇦 العربية</div>
+      </div>
+    </div>
+    <button class="nav-cta" onclick="showPage('pricing')" data-i18n="nav_cta">Commencer →</button>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <button class="nav-link" onclick="showPage('home');closeMenu()" data-i18n="nav_home">Accueil</button>
+  <button class="nav-link" onclick="showPage('app');closeMenu()" data-i18n="nav_app">L'app</button>
+  <button class="nav-link" onclick="showPage('jobs');closeMenu()" data-i18n="nav_jobs">Offres</button>
+  <button class="nav-link" onclick="showPage('pricing');closeMenu()" data-i18n="nav_pricing">Tarifs</button>
+  <button class="nav-link" onclick="showPage('faq');closeMenu()" data-i18n="nav_faq">FAQ</button>
+  <button class="nav-link" onclick="showPage('legal');closeMenu()" data-i18n="nav_legal">Légal</button>
+</div>
+
+<!-- PWA Install Banner -->
+<div class="pwa-banner" id="pwa-banner">
+  <span style="font-size:28px;">📱</span>
+  <div style="flex:1;">
+    <p style="font-weight:700;font-size:14px;margin-bottom:2px;" data-i18n="pwa_title">Installer Novago</p>
+    <p style="font-size:12px;color:var(--text2);" data-i18n="pwa_desc">Accès rapide depuis ton écran d'accueil</p>
+  </div>
+  <button onclick="installPWA()" style="padding:8px 16px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#2aa89c);border:none;color:#07090f;font-family:'Syne',sans-serif;font-weight:800;font-size:12px;" data-i18n="pwa_btn">Installer</button>
+  <button onclick="dismissPWA()" style="background:none;border:none;color:var(--muted);font-size:18px;padding:4px;">×</button>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE : HOME
+══════════════════════════════════ -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-badge"><div class="badge-dot"></div><span data-i18n="hero_badge">Bientôt disponible · Rejoins la waitlist</span></div>
+    <h1 class="hero-title" data-i18n="hero_title_html">Ta carrière<br><em>sans frontières.</em></h1>
+    <p class="hero-sub" data-i18n="hero_sub_html">Novago connecte les Français qui veulent travailler à l'étranger avec des <strong>mentors expats</strong> — et des offres d'emploi triées pour eux.</p>
+    <div id="hero-form-wrap">
+      <form class="hero-form" onsubmit="submitWaitlist(event,'hero')">
+        <input class="hero-input" type="email" placeholder="ton@email.fr" required id="hero-email" data-i18n-ph="hero_email_ph"/>
+        <button class="hero-btn" type="submit" data-i18n="hero_cta">Je rejoins →</button>
+      </form>
+      <p class="hero-count" id="hero-count"><strong>247</strong> <span data-i18n="hero_count_txt">personnes inscrites · Zéro spam</span></p>
+    </div>
+    <div class="success-wrap" id="hero-success">
+      <div class="success-icon">🎯</div>
+      <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;" data-i18n="success_title">Tu es sur la liste !</p>
+      <p style="color:var(--text2);font-size:14px;" data-i18n="success_sub">On te prévient en avant-première.</p>
+    </div>
+  </div>
+
+  <div class="marquee-wrap"><div class="marquee-track" id="marquee-home"></div></div>
+
+  <!-- HOW IT WORKS -->
+  <section class="section">
+    <span class="label reveal" data-i18n="how_label">Comment ça marche</span>
+    <h2 class="title reveal d1" data-i18n="how_title_html">Simple comme<br><em>bonjour.</em></h2>
+    <p class="subtitle reveal d2" data-i18n="how_sub">Trois étapes pour transformer ton projet d'expatriation en réalité.</p>
+    <div class="steps-grid">
+      <div class="step reveal"><div class="step-n">01</div><div style="font-size:28px;margin-bottom:14px;">🎯</div><h3 data-i18n="step1_title">Définis ton projet</h3><p data-i18n="step1_desc">Secteur, destination, niveau — Novago match ton profil avec les offres et mentors les plus pertinents.</p></div>
+      <div class="step reveal d1"><div class="step-n">02</div><div style="font-size:28px;margin-bottom:14px;">🧭</div><h3 data-i18n="step2_title">Parle à un mentor</h3><p data-i18n="step2_desc">Un Français qui vit déjà là-bas. Il connaît les visas, le marché, les quartiers. À partir de 5€ la session.</p></div>
+      <div class="step reveal d2"><div class="step-n">03</div><div style="font-size:28px;margin-bottom:14px;">✈️</div><h3 data-i18n="step3_title">Passe à l'action</h3><p data-i18n="step3_desc">Tu postules, tu construis ton réseau expat, tu pars. Novago reste avec toi à chaque étape.</p></div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div style="max-width:1160px;margin:0 auto;padding:0 48px 80px;">
+    <div class="stats-row reveal">
+      <div class="stat"><div class="stat-n">+40</div><div class="stat-l" data-i18n="stat1">Pays couverts</div></div>
+      <div class="stat"><div class="stat-n">5€</div><div class="stat-l" data-i18n="stat2">Session à partir de</div></div>
+      <div class="stat"><div class="stat-n">100%</div><div class="stat-l" data-i18n="stat3">Mentors vérifiés</div></div>
+      <div class="stat"><div class="stat-n">&lt;2h</div><div class="stat-l" data-i18n="stat4">Temps de réponse</div></div>
+    </div>
+  </div>
+
+  <!-- MENTORS -->
+  <section class="section" style="padding-top:0;">
+    <span class="label reveal" data-i18n="mentors_label">Tes futurs mentors</span>
+    <h2 class="title reveal d1" data-i18n="mentors_title_html">Des vrais gens,<br><em>des vraies vies.</em></h2>
+    <p class="subtitle reveal d2" data-i18n="mentors_sub">Chaque mentor a vécu ton projet. Ils fixent leur propre tarif.</p>
+    <div class="mentors-grid">
+      <div class="mcard reveal"><div class="mcard-bar" style="background:linear-gradient(90deg,#f472b670,transparent)"></div><div style="display:flex;gap:12px;margin-bottom:10px;"><div class="mcard-av" style="background:rgba(244,114,182,0.15);border:1px solid rgba(244,114,182,0.3);color:#f472b6;">CR</div><div><div class="mcard-name">Camille R. 🇺🇸</div><div class="mcard-role">Head of Sales · Miami</div></div></div><div class="mcard-bio">"J'ai monté une équipe sales de 0 depuis Miami."</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;"><span class="tag">Visa O-1</span><span class="tag">Miami</span><span class="tag">Négo</span></div><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#f472b6;">10€<span style="font-size:10px;font-weight:400;color:var(--muted);">/session</span></span><div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--green);"><div class="avail-dot"></div><span data-i18n="available">Disponible</span></div></div></div>
+      <div class="mcard reveal d1"><div class="mcard-bar" style="background:linear-gradient(90deg,#818cf870,transparent)"></div><div style="display:flex;gap:12px;margin-bottom:10px;"><div class="mcard-av" style="background:rgba(129,140,248,0.15);border:1px solid rgba(129,140,248,0.3);color:#818cf8;">TM</div><div><div class="mcard-name">Thomas M. 🇩🇪</div><div class="mcard-role">Engineering Manager · Berlin</div></div></div><div class="mcard-bio">"Arrivé à Berlin avec une valise. Manager chez N26."</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;"><span class="tag">EU Blue Card</span><span class="tag">Startup</span><span class="tag">Logement</span></div><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#818cf8;">15€<span style="font-size:10px;font-weight:400;color:var(--muted);">/session</span></span><div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--green);"><div class="avail-dot"></div><span data-i18n="available">Disponible</span></div></div></div>
+      <div class="mcard reveal d2"><div class="mcard-bar" style="background:linear-gradient(90deg,#fbbf2470,transparent)"></div><div style="display:flex;gap:12px;margin-bottom:10px;"><div class="mcard-av" style="background:rgba(251,191,36,0.15);border:1px solid rgba(251,191,36,0.3);color:#fbbf24;">LF</div><div><div class="mcard-name">Lucas F. 🇦🇪</div><div class="mcard-role">Finance Manager · Dubaï</div></div></div><div class="mcard-bio">"Dubaï c'est pas que le bling-bling."</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;"><span class="tag">Zéro impôt</span><span class="tag">Visa Golden</span><span class="tag">Networking</span></div><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#fbbf24;">20€<span style="font-size:10px;font-weight:400;color:var(--muted);">/session</span></span><div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--green);"><div class="avail-dot"></div><span data-i18n="available">Disponible</span></div></div></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section" style="padding-top:0;">
+    <span class="label reveal" data-i18n="testi_label">Ils ont osé</span>
+    <h2 class="title reveal d1" data-i18n="testi_title_html">Ce qu'ils <em>disent.</em></h2>
+    <div class="testi-grid">
+      <div class="testi reveal"><p class="testi-text">"J'avais peur de me lancer seul. Mon mentor à Dublin m'a tout expliqué en 1h. 3 mois plus tard j'étais installé."</p><div style="display:flex;gap:12px;align-items:center;"><div class="testi-av" style="background:linear-gradient(135deg,#52d2c4,#2aa89c);">M</div><div><p style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;">Marc T.</p><p style="font-size:11px;color:var(--muted);">Dev fullstack · Dublin 🇮🇪</p></div></div></div>
+      <div class="testi reveal d1"><p class="testi-text">"Le matching m'a orientée vers Amsterdam. Mon mentor m'a montré que le marché hollandais payait mieux pour mon profil."</p><div style="display:flex;gap:12px;align-items:center;"><div class="testi-av" style="background:linear-gradient(135deg,#f472b6,#db2777);">L</div><div><p style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;">Léa V.</p><p style="font-size:11px;color:var(--muted);">Marketing · Amsterdam 🇳🇱</p></div></div></div>
+      <div class="testi reveal d2"><p class="testi-text">"15€ la session avec quelqu'un qui a vécu exactement mon projet. J'ai économisé des mois de galère."</p><div style="display:flex;gap:12px;align-items:center;"><div class="testi-av" style="background:linear-gradient(135deg,#818cf8,#6366f1);">R</div><div><p style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;">Romain D.</p><p style="font-size:11px;color:var(--muted);">Ops Manager · Singapour 🇸🇬</p></div></div></div>
+    </div>
+  </section>
+
+  <!-- BECOME MENTOR -->
+  <section class="section" style="padding-top:0;">
+    <div class="become-grid">
+      <div>
+        <span class="label reveal" data-i18n="become_label">Tu vis à l'étranger ?</span>
+        <h2 class="title reveal d1" data-i18n="become_title_html">Ton expat<br><em>a de la valeur.</em></h2>
+        <p class="subtitle reveal d2" style="margin-bottom:24px;" data-i18n="become_sub">Aide d'autres Français à se lancer — et fixe toi-même ton tarif.</p>
+        <button class="nav-cta reveal d3" onclick="showPage('pricing')" style="font-size:14px;padding:12px 26px;" data-i18n="become_cta">Devenir mentor →</button>
+      </div>
+      <div class="reveal d1">
+        <div class="become-feat"><div class="bfeat-icon">💰</div><div><div class="bfeat-title" data-i18n="bf1_t">Ton tarif, tes règles</div><div class="bfeat-desc" data-i18n="bf1_d">5 à 50€/session. C'est toi qui décides.</div></div></div>
+        <div class="become-feat"><div class="bfeat-icon">🗓️</div><div><div class="bfeat-title" data-i18n="bf2_t">Flexibilité totale</div><div class="bfeat-desc" data-i18n="bf2_d">Ouvre des créneaux uniquement quand tu veux.</div></div></div>
+        <div class="become-feat"><div class="bfeat-icon">🔒</div><div><div class="bfeat-title" data-i18n="bf3_t">Paiement garanti</div><div class="bfeat-desc" data-i18n="bf3_d">Virement automatique après chaque session.</div></div></div>
+        <div class="become-feat"><div class="bfeat-icon">✦</div><div><div class="bfeat-title" data-i18n="bf4_t">Badge vérifié</div><div class="bfeat-desc" data-i18n="bf4_d">Label de confiance visible par toute la communauté.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <div style="text-align:center;padding:90px 24px;background:linear-gradient(180deg,transparent,var(--ac-dim) 50%,transparent);border-top:1px solid var(--border);">
+    <span class="label" style="display:block;margin-bottom:14px;" data-i18n="cta2_label">Accès anticipé</span>
+    <h2 class="title" style="margin-bottom:14px;" data-i18n="cta2_title_html">Prêt à <em>décoller ?</em></h2>
+    <p style="color:var(--text2);font-size:17px;max-width:480px;margin:0 auto 40px;font-weight:300;" data-i18n="cta2_sub">Les 500 premiers inscrits accèdent gratuitement à leur première session mentor.</p>
+    <div id="cta2-form">
+      <form class="hero-form" style="justify-content:center;" onsubmit="submitWaitlist(event,'cta2')">
+        <input class="hero-input" type="email" placeholder="ton@email.fr" required id="cta2-email" style="max-width:300px;" data-i18n-ph="hero_email_ph"/>
+        <button class="hero-btn" type="submit" data-i18n="hero_cta">Je rejoins →</button>
+      </form>
+      <p style="margin-top:14px;font-size:13px;color:var(--muted);"><strong style="color:var(--text);">247</strong> <span data-i18n="hero_count_txt">personnes inscrites · Zéro spam</span></p>
+    </div>
+    <div class="success-wrap" id="cta2-success">
+      <div class="success-icon">🚀</div>
+      <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:22px;" data-i18n="cta2_success">À très vite !</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE : APP
+══════════════════════════════════ -->
+<div id="page-app" class="page">
+  <div class="section">
+    <span class="label" data-i18n="app_label">L'application</span>
+    <h2 class="title" data-i18n="app_title_html">Une app pensée<br><em>pour les ambitieux.</em></h2>
+    <p class="subtitle" data-i18n="app_sub">Novago c'est bien plus qu'un job board. Une plateforme complète qui t'accompagne de l'envie à l'atterrissage.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:56px;" class="app-showcase-grid">
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="become-feat"><div class="bfeat-icon" style="background:var(--ac-dim);border:1px solid var(--ac-b);">🧭</div><div><div class="bfeat-title" data-i18n="app_f1t">Mentors expats</div><div class="bfeat-desc" data-i18n="app_f1d">Des Français dans +40 pays. Sessions à partir de 5€.</div></div></div>
+        <div class="become-feat"><div class="bfeat-icon" style="background:var(--vi-dim);border:1px solid var(--vi-b);">💼</div><div><div class="bfeat-title" data-i18n="app_f2t">Offres sélectionnées</div><div class="bfeat-desc" data-i18n="app_f2d">Agrégateur international avec score de matching IA.</div></div></div>
+        <div class="become-feat"><div class="bfeat-icon" style="background:var(--go-dim);border:1px solid var(--go-b);">📡</div><div><div class="bfeat-title" data-i18n="app_f3t">Feed communautaire</div><div class="bfeat-desc" data-i18n="app_f3d">Tips, actus visa, témoignages. LinkedIn pour l'international.</div></div></div>
+        <div class="become-feat"><div class="bfeat-icon" style="background:var(--ro-dim);border:1px solid var(--ro-b);">🗺️</div><div><div class="bfeat-title" data-i18n="app_f4t">Guide destinations</div><div class="bfeat-desc" data-i18n="app_f4d">Coût de vie, salaires, visas, conseils pour chaque pays.</div></div></div>
+        <div style="margin-top:8px;padding:16px 20px;background:var(--ac-dim);border:1px solid var(--ac-b);border-radius:16px;">
+          <p style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-bottom:4px;" data-i18n="pwa_info_title">📱 Installable sur mobile</p>
+          <p style="font-size:13px;color:var(--text2);" data-i18n="pwa_info_desc">Novago fonctionne comme une app native sur iOS et Android. Ajoute-la à ton écran d'accueil depuis ton navigateur.</p>
+        </div>
+      </div>
+      <div class="phone-wrap">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div style="padding:14px 12px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <div style="display:flex;align-items:center;gap:5px;"><div style="width:18px;height:18px;border-radius:5px;background:linear-gradient(135deg,#52d2c4,#2aa89c);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:800;color:#07090f;font-family:'Syne',sans-serif;">N</div><span style="font-family:'Syne',sans-serif;font-size:11px;font-weight:800;">novago</span></div>
+                <div style="width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#52d2c4,#2aa89c);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:#07090f;font-family:'Syne',sans-serif;">J</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:13px;padding:11px;margin-bottom:7px;position:relative;overflow:hidden;">
+                <div style="position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,#f472b6,transparent);"></div>
+                <div style="display:flex;gap:7px;align-items:center;margin-bottom:7px;"><div style="width:30px;height:30px;border-radius:9px;background:rgba(244,114,182,0.2);border:1px solid rgba(244,114,182,0.3);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#f472b6;font-family:'Syne',sans-serif;">CR</div><div><div style="font-family:'Syne',sans-serif;font-size:9px;font-weight:700;">Camille R. 🇺🇸</div><div style="font-size:8px;color:#6b7280;">Head of Sales · Miami</div></div></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-family:'Syne',sans-serif;font-size:11px;font-weight:800;color:#f472b6;">10€</span><span style="font-size:8px;color:#4ade80;">⚡ dispo</span></div>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:13px;padding:11px;margin-bottom:7px;">
+                <div style="font-size:8px;color:#ff6b6b;font-weight:700;margin-bottom:3px;">🔥 TRENDING</div>
+                <div style="font-family:'Syne',sans-serif;font-size:9px;font-weight:700;margin-bottom:2px;">Operations Manager</div>
+                <div style="font-size:8px;color:#6b7280;margin-bottom:7px;">Tesla · 🇬🇧 Manchester</div>
+                <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:800;color:#52d2c4;">£62k</span><div style="display:flex;align-items:center;gap:3px;"><div style="width:32px;height:2px;background:rgba(255,255,255,0.06);border-radius:1px;"><div style="height:100%;width:95%;background:linear-gradient(90deg,#52d2c4,#2aa89c);border-radius:1px;"></div></div><span style="font-size:8px;color:#52d2c4;font-weight:700;">95%</span></div></div>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:13px;padding:9px;">
+                <div style="display:flex;gap:5px;align-items:center;margin-bottom:5px;"><div style="width:20px;height:20px;border-radius:6px;background:rgba(129,140,248,0.2);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:800;color:#818cf8;flex-shrink:0;">T</div><div style="font-size:8px;color:#6b7280;">Thomas M. 🇩🇪 · 5h</div></div>
+                <div style="font-size:8px;color:#9ca3af;line-height:1.5;">EU Blue Card mise à jour. Opportunité pour les managers français ✨</div>
+              </div>
+            </div>
+            <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(7,9,15,0.97);border-top:1px solid rgba(255,255,255,0.06);padding:7px 0 10px;display:flex;">
+              <div style="flex:1;text-align:center;"><div style="font-size:15px;">🧭</div><div style="font-size:7px;color:#52d2c4;font-weight:700;">Mentors</div></div>
+              <div style="flex:1;text-align:center;"><div style="font-size:15px;">💼</div><div style="font-size:7px;color:#3d4350;">Offres</div></div>
+              <div style="flex:1;text-align:center;"><div style="font-size:15px;">📡</div><div style="font-size:7px;color:#3d4350;">Feed</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE : JOBS
+══════════════════════════════════ -->
+<div id="page-jobs" class="page">
+  <div class="jobs-header">
+    <span class="label" data-i18n="jobs_label">Offres d'emploi</span>
+    <h2 class="title" data-i18n="jobs_title_html">Trouve ton<br><em>poste à l'étranger.</em></h2>
+    <p class="subtitle" data-i18n="jobs_sub">Offres agrégées en temps réel depuis les meilleures sources internationales. Filtrées pour les francophones.</p>
+  </div>
+  <div class="jobs-controls">
+    <div class="search-bar" style="max-width:340px;">
+      <span style="color:var(--muted);">🔍</span>
+      <input type="text" id="job-search" placeholder="Poste, entreprise, pays..." oninput="filterJobs()"/>
+    </div>
+    <select class="filter-select" id="job-country" onchange="filterJobs()">
+      <option value="">🌍 Tous les pays</option>
+      <option value="ireland">🇮🇪 Irlande</option>
+      <option value="germany">🇩🇪 Allemagne</option>
+      <option value="uk">🇬🇧 Royaume-Uni</option>
+      <option value="canada">🇨🇦 Canada</option>
+      <option value="netherlands">🇳🇱 Pays-Bas</option>
+      <option value="usa">🇺🇸 États-Unis</option>
+      <option value="singapore">🇸🇬 Singapour</option>
+      <option value="uae">🇦🇪 ÉAU</option>
+    </select>
+    <select class="filter-select" id="job-type" onchange="filterJobs()">
+      <option value="">📋 Tous types</option>
+      <option value="fulltime">Temps plein</option>
+      <option value="remote">Remote</option>
+      <option value="contract">Contrat</option>
+    </select>
+    <select class="filter-select" id="job-sector" onchange="filterJobs()">
+      <option value="">🏢 Tous secteurs</option>
+      <option value="tech">Tech</option>
+      <option value="finance">Finance</option>
+      <option value="marketing">Marketing</option>
+      <option value="ops">Opérations</option>
+      <option value="sales">Commercial</option>
+    </select>
+    <button onclick="loadJobs()" style="padding:10px 18px;border-radius:12px;background:var(--ac-dim);border:1px solid var(--ac-b);color:var(--accent);font-family:'Syne',sans-serif;font-weight:700;font-size:13px;" data-i18n="jobs_refresh">↻ Actualiser</button>
+  </div>
+  <div id="jobs-count" style="padding:0 48px;max-width:1160px;margin:0 auto;font-size:13px;color:var(--muted);"></div>
+  <div id="jobs-container" class="jobs-grid"></div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE : PRICING
+══════════════════════════════════ -->
+<div id="page-pricing" class="page">
+  <div style="padding:calc(var(--nav-h)+60px) 48px 0;max-width:1160px;margin:0 auto;text-align:center;">
+    <span class="label" style="display:block;" data-i18n="pricing_label">Tarifs</span>
+    <h2 class="title" data-i18n="pricing_title_html">Commence gratuitement.<br><em>Évolue quand tu veux.</em></h2>
+    <p class="subtitle" style="margin:0 auto 12px;" data-i18n="pricing_sub">Gratuit pour démarrer. Les abonnements débloquent ce qui fait vraiment la différence.</p>
+  </div>
+  <div style="max-width:1160px;margin:0 auto;padding:0 48px 80px;">
+    <div class="bill-toggle" style="margin-top:36px;">
+      <button class="bill-btn active" id="bill-m" onclick="setBilling('m')" data-i18n="bill_monthly">Mensuel</button>
+      <button class="bill-btn" id="bill-a" onclick="setBilling('a')"><span data-i18n="bill_annual">Annuel</span> · <span style="color:var(--green);">−30%</span></button>
+    </div>
+    <div class="pricing-grid">
+      <div class="pcard" style="background:var(--surface);border:1px solid var(--border);">
+        <div class="pcard-bar" style="background:linear-gradient(90deg,var(--accent),transparent)"></div>
+        <div style="font-size:26px;margin-bottom:10px;">🌍</div>
+        <div class="pcard-name" data-i18n="plan_free_name">Explorateur</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:14px;" data-i18n="plan_free_tag">Pour découvrir</div>
+        <div class="pcard-price" style="color:var(--accent);" data-i18n="plan_free_price">Gratuit</div>
+        <div class="pcard-feat">
+          <div class="feat-row"><span class="feat-check" style="color:var(--accent);">✓</span><span data-i18n="f_free1">5 offres/semaine</span></div>
+          <div class="feat-row"><span class="feat-check" style="color:var(--accent);">✓</span><span data-i18n="f_free2">Voir les mentors</span></div>
+          <div class="feat-row"><span class="feat-check" style="color:var(--accent);">✓</span><span data-i18n="f_free3">1 message/semaine</span></div>
+          <div class="feat-row"><span class="feat-check" style="color:var(--muted);">—</span><span style="color:var(--muted);" data-i18n="f_ia">Matching IA</span></div>
+          <div class="feat-row"><span class="feat-check" style="color:var(--muted);">—</span><span style="color:var(--muted);" data-i18n="f_early">Offres avant-première</span></div>
+          <div class="feat-row"><span class="feat-check" style="color:var(--muted);">—</span><span style="color:var(--muted);" data-i18n="f_webinar">Webinaires live</span></div>
+        </div>
+        <button class="pcard-btn" style="background:var(--ac-dim);border:1px solid var(--ac-b);color:var(--accent);" onclick="showPage('home')" data-i18n="cta_free">Commencer gratuitement</button>
+      </div>
+      <div class="pcard" style="background:var(--go-dim);border:1px solid var(--go-b);">
+        <div class="pcard-bar" style="background:linear-gradient(90deg,var(--gold),transparent)"></div>
+        <div style="font-size:26px;margin-bottom:10px;">✈️</div>
+        <div class="pcard-name" data-i18n="plan_nomade_name">Nomade</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:14px;" data-i18n="plan_nomade_tag">Pour passer à l'action</div>
+        <div class="pcard-price" style="color:var(--gold);"><span id="p-nomade">9</span>€<span id="p-nomade-per" data-i18n="per_month">/mois</span></div>
+        <div class="pcard-feat">
+          <div class="feat-row"><span class="feat-check" style="color:var(--gold);">✓</span><span data-i18n="f_nomade1">Offres illimitées</span></div>
+          <div class="feat-row"><span class="feat-check" style="color:var(--gold);">✓</span><span data-i18n="f_nomade2">5 messages/semaine</span></div>
+          <div class="feat-row"><span class="feat-check" style="color:var(--gold);">✓</span><span>Sessions <span class="feat-note" style="color:var(--gold);">−10%</span></span></div>
+          <div class="feat-row"><span class="feat-check" style="color:var(--gold);">✓</span><span data-i18n="f_nomade4">Matching IA basique</span></div>
+          <div class="feat-row"><span class="feat-check" style="color:var(--gold);">✓</span><span data-i18n="f_nomade5">Kanban candidatures</span></div>
+          <div class="feat-row"><span class="feat-check" style="color:var(--muted);">—</span><span style="color:var(--muted);" data-i18n="f_early">Offres avant-première</span></div>
+        </div>
+        <button class="pcard-btn" style="background:rgba(232,201,122,0.15);border:1px solid var(--go-b);color:var(--gold);" data-i18n="cta_trial">Essai 7 jours gratuits</button>
+      </div>
+      <div class="pcard" style="background:var(--vi-dim);border:1px solid var(--vi-b);">
+        <div class="pcard-bar" style="background:linear-gradient(90deg,var(--violet),transparent)"></div>
+        <div class="popular-badge" style="background:var(--vi-dim);border:1px solid var(--vi-b);color:var(--violet);" data-i18n="popular">Populaire</div>
+        <div style="font-size:26px;margin-bottom:10px;">🚀</div>
+        <div class="pcard-name" data-i18n="plan_horizon_name">Horizon</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:14px;" data-i18n="plan_horizon_tag">Pour les sérieux</div>
+        <div class="pcard-price" style="color:var(--violet);"><span id="p-horizon">19</span>€<span id="p-horizon-per" data-i18n="per_month">/mois</span></div>
+        <div class="pcard-feat">
+          <div class="feat-row"><span class="feat-check" style="color:var(--violet);">✓</span><span data-i18n="f_horizon1">Tout Nomade inclus</span></div>
+          <div class="feat-row"><span class="feat-check" style="color:var(--violet);">✓</span><span>Sessions <span class="feat-note" style="color:var(--violet);">−20%</span></span></div>
+          <div class="feat-row"><span class="feat-check" style="color:var(--violet);">✓</span><span data-i18n="f_horizon3">Matching IA avancé</span></div>
+          <div class="feat-row"><span class="feat-check" style="color:var(--violet);">✓</span><span data-i18n="f_early">Offres avant-première 48h</span></div>
+          <div class="feat-row"><span class="feat-check" style="color:var(--violet);">✓</span><span data-i18n="f_horizon5">Webinaires 2×/mois</span></div>
+          <div class="feat-row"><span class="feat-check" style="color:var(--violet);">✓</span><span data-i18n="f_horizon6">1ère session offerte</span></div>
+        </div>
+        <button class="pcard-btn" style="background:linear-gradient(135deg,var(--violet),#8b5cf6);color:#fff;border:none;" data-i18n="cta_horizon">Commencer Horizon</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE : FAQ
+══════════════════════════════════ -->
+<div id="page-faq" class="page">
+  <div class="section-sm">
+    <span class="label" data-i18n="faq_label">Centre d'aide</span>
+    <h2 class="title" data-i18n="faq_title_html">Tout ce que tu<br><em>veux savoir.</em></h2>
+    <p class="subtitle" data-i18n="faq_sub">Des réponses claires sur Novago, les mentors, les abonnements et l'expatriation.</p>
+    <div class="faq-list" id="main-faq"></div>
+  </div>
+  <div style="text-align:center;padding:60px 24px;border-top:1px solid var(--border);">
+    <p style="font-size:16px;font-weight:500;margin-bottom:8px;" data-i18n="faq_contact_title">Tu n'as pas trouvé ta réponse ?</p>
+    <p style="color:var(--text2);font-size:14px;margin-bottom:20px;" data-i18n="faq_contact_sub">Notre équipe répond sous 24h</p>
+    <a href="mailto:novagoteamfr@gmail.com" class="nav-cta" style="display:inline-block;" data-i18n="faq_contact_cta">Contacter le support →</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE : LEGAL (CGU + CGV + Mentions)
+══════════════════════════════════ -->
+<div id="page-legal" class="page">
+  <div class="legal-wrap">
+    <!-- Sub-tabs -->
+    <div style="display:flex;gap:8px;margin-bottom:40px;flex-wrap:wrap;">
+      <button onclick="showLegal('cgu')" id="lt-cgu" class="nav-cta" style="font-size:13px;" data-i18n="lt_cgu">CGU</button>
+      <button onclick="showLegal('cgv')" id="lt-cgv" style="padding:9px 18px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-weight:700;font-size:13px;" data-i18n="lt_cgv">CGV</button>
+      <button onclick="showLegal('ml')" id="lt-ml" style="padding:9px 18px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-weight:700;font-size:13px;" data-i18n="lt_ml">Mentions légales</button>
+    </div>
+    <!-- CGU -->
+    <div id="legal-cgu">
+      <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 13px;border-radius:100px;background:var(--ac-dim);border:1px solid var(--ac-b);font-size:10px;font-weight:800;color:var(--accent);margin-bottom:18px;font-family:'Syne',sans-serif;letter-spacing:1px;">CONDITIONS GÉNÉRALES D'UTILISATION</div>
+      <h1>CGU Novago</h1>
+      <p class="legal-date">Version 1.0 — En vigueur à compter du 1er janvier 2026</p>
+      <h2>1. Présentation de Novago</h2>
+      <p>Novago est une plateforme en ligne éditée par la société Novago SAS. Novago met en relation des particuliers souhaitant travailler à l'étranger (« Utilisateurs ») avec des expatriés français proposant des services de conseil (« Mentors »), et donne accès à des offres d'emploi internationales.</p>
+      <p>L'accès et l'utilisation impliquent l'acceptation pleine et entière des présentes CGU.</p>
+      <h2>2. Définitions</h2>
+      <p><strong>Plateforme :</strong> l'ensemble des services accessibles via novago.fr et l'application Novago.</p>
+      <p><strong>Utilisateur :</strong> toute personne physique majeure qui accède à la plateforme.</p>
+      <p><strong>Mentor :</strong> tout utilisateur qui propose des sessions de conseil à titre onéreux.</p>
+      <p><strong>Session :</strong> échange payant entre un Utilisateur et un Mentor d'une durée convenue à l'avance.</p>
+      <h2>3. Inscription et compte</h2>
+      <h3>3.1 Conditions</h3>
+      <p>L'inscription est réservée aux personnes physiques majeures (18 ans ou plus). Vous garantissez l'exactitude des informations fournies.</p>
+      <h3>3.2 Responsabilité</h3>
+      <p>Vous êtes responsable de la confidentialité de vos identifiants. En cas d'accès non autorisé : <a href="mailto:novagoteamfr@gmail.com">novagoteamfr@gmail.com</a>.</p>
+      <h3>3.3 Suspension</h3>
+      <p>Novago se réserve le droit de suspendre tout compte en cas de violation des présentes CGU, sans préavis ni indemnité.</p>
+      <h2>4. Services proposés</h2>
+      <p>Novago agrège des offres d'emploi internationales et met en relation Utilisateurs et Mentors. Novago agit en tant qu'intermédiaire technique. Les Mentors sont des professionnels indépendants et non des salariés de Novago.</p>
+      <h2>5. Règles de conduite</h2>
+      <ul>
+        <li>Ne pas publier de contenu faux, trompeur ou illégal ;</li>
+        <li>Ne pas contacter les mentors hors plateforme pour contourner les commissions ;</li>
+        <li>Respecter les autres membres de la communauté.</li>
+      </ul>
+      <h2>6. Propriété intellectuelle</h2>
+      <p>L'ensemble des éléments de la plateforme est la propriété exclusive de Novago SAS. Toute reproduction non autorisée est interdite.</p>
+      <h2>7. Données personnelles</h2>
+      <p>Traitement conforme au RGPD. Droits d'accès, rectification, effacement et portabilité : <a href="mailto:novagoteamfr@gmail.com">novagoteamfr@gmail.com</a>.</p>
+      <h2>8. Limitation de responsabilité</h2>
+      <p>La responsabilité de Novago est limitée au montant des sommes versées au cours des 12 derniers mois.</p>
+      <h2>9. Droit applicable</h2>
+      <p>Droit français. Juridiction compétente : tribunaux de Paris.</p>
+      <h2>10. Contact</h2>
+      <p><a href="mailto:novagoteamfr@gmail.com">novagoteamfr@gmail.com</a></p>
+    </div>
+    <!-- CGV -->
+    <div id="legal-cgv" style="display:none;">
+      <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 13px;border-radius:100px;background:var(--go-dim);border:1px solid var(--go-b);font-size:10px;font-weight:800;color:var(--gold);margin-bottom:18px;font-family:'Syne',sans-serif;letter-spacing:1px;">CONDITIONS GÉNÉRALES DE VENTE</div>
+      <h1>CGV Novago</h1>
+      <p class="legal-date">Version 1.0 — En vigueur à compter du 1er janvier 2026</p>
+      <h2>1. Objet</h2>
+      <p>Les présentes CGV régissent les relations contractuelles entre Novago SAS et tout utilisateur qui souscrit à un abonnement payant ou effectue un paiement sur la plateforme.</p>
+      <h2>2. Abonnements utilisateurs</h2>
+      <table class="legal-table">
+        <tr><th>Plan</th><th>Mensuel</th><th>Annuel</th><th>Économie</th></tr>
+        <tr><td>Explorateur</td><td>Gratuit</td><td>Gratuit</td><td>—</td></tr>
+        <tr><td>Nomade</td><td>9€ TTC/mois</td><td>79€ TTC/an</td><td>29€</td></tr>
+        <tr><td>Horizon</td><td>19€ TTC/mois</td><td>159€ TTC/an</td><td>69€</td></tr>
+      </table>
+      <h2>3. Sessions mentor</h2>
+      <p>Novago perçoit une commission de 15% à 20% selon le statut du mentor. L'annulation est gratuite jusqu'à 2h avant la session.</p>
+      <h2>4. Droit de rétractation</h2>
+      <p>Délai de 14 jours à compter de la souscription. Contact : <a href="mailto:novagoteamfr@gmail.com">novagoteamfr@gmail.com</a>.</p>
+      <h2>5. Résiliation</h2>
+      <p>Résiliation à tout moment depuis l'espace personnel. Effet à la fin de la période en cours. Aucun remboursement prorata.</p>
+      <h2>6. Droit applicable</h2>
+      <p>Droit français. Médiation : <a href="https://www.mediateur-de-la-consommation.fr" target="_blank">médiateur-de-la-consommation.fr</a>.</p>
+    </div>
+    <!-- Mentions légales -->
+    <div id="legal-ml" style="display:none;">
+      <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 13px;border-radius:100px;background:var(--vi-dim);border:1px solid var(--vi-b);font-size:10px;font-weight:800;color:var(--violet);margin-bottom:18px;font-family:'Syne',sans-serif;letter-spacing:1px;">MENTIONS LÉGALES</div>
+      <h1>Mentions légales</h1>
+      <p class="legal-date">Dernière mise à jour : janvier 2026</p>
+      <h2>1. Éditeur</h2>
+      <table class="legal-table">
+        <tr><th>Champ</th><th>Information</th></tr>
+        <tr><td>Raison sociale</td><td>Novago SAS</td></tr>
+        <tr><td>Directeur de la publication</td><td>Johri EL KHDIMI</td></tr>
+        <tr><td>Email</td><td><a href="mailto:novagoteamfr@gmail.com">novagoteamfr@gmail.com</a></td></tr>
+        <tr><td>SIRET</td><td>En cours d'immatriculation</td></tr>
+      </table>
+      <h2>2. Hébergement</h2>
+      <table class="legal-table">
+        <tr><th>Hébergeur</th><th>Informations</th></tr>
+        <tr><td>Vercel Inc.</td><td>340 S Lemon Ave #4133, Walnut, CA 91789, USA</td></tr>
+      </table>
+      <h2>3. Propriété intellectuelle</h2>
+      <p>Tout le contenu de novago.fr est protégé par le droit de la propriété intellectuelle et est la propriété exclusive de Novago SAS.</p>
+      <h2>4. Données personnelles & RGPD</h2>
+      <p>Données collectées : identification, profil professionnel, navigation. DPO : <a href="mailto:novagoteamfr@gmail.com">novagoteamfr@gmail.com</a>. Réclamation CNIL : <a href="https://www.cnil.fr" target="_blank">cnil.fr</a>.</p>
+      <h2>5. Cookies</h2>
+      <p>Cookies techniques (session) et analytiques (audience anonymisée). Paramétrage via votre navigateur.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<footer>
+  <div class="footer-brand">
+    <div class="logo"><div class="logo-mark">N→</div><span class="logo-text">novago</span></div>
+    <p data-i18n="footer_tagline">Ta carrière, sans frontières. La plateforme des Français qui osent l'international.</p>
+  </div>
+  <div class="footer-col">
+    <h4 data-i18n="footer_product">Produit</h4>
+    <a onclick="showPage('home')" data-i18n="nav_home">Accueil</a>
+    <a onclick="showPage('app')" data-i18n="nav_app">L'application</a>
+    <a onclick="showPage('jobs')" data-i18n="nav_jobs">Offres d'emploi</a>
+    <a onclick="showPage('pricing')" data-i18n="nav_pricing">Tarifs</a>
+    <a onclick="showPage('faq')" data-i18n="nav_faq">FAQ</a>
+  </div>
+  <div class="footer-col">
+    <h4 data-i18n="footer_legal">Légal</h4>
+    <a onclick="showPage('legal');showLegal('cgu')" data-i18n="lt_cgu">CGU</a>
+    <a onclick="showPage('legal');showLegal('cgv')" data-i18n="lt_cgv">CGV</a>
+    <a onclick="showPage('legal');showLegal('ml')" data-i18n="lt_ml">Mentions légales</a>
+    <a href="mailto:novagoteamfr@gmail.com">RGPD / DPO</a>
+  </div>
+  <div class="footer-col">
+    <h4 data-i18n="footer_contact">Contact</h4>
+    <a href="mailto:novagoteamfr@gmail.com">novagoteamfr@gmail.com</a>
+    <a href="mailto:novagoteamfr@gmail.com" data-i18n="footer_become_mentor">Devenir mentor</a>
+    <a href="mailto:novagoteamfr@gmail.com" data-i18n="footer_press">Presse</a>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2026 Novago SAS — <span data-i18n="footer_rights">Tous droits réservés</span></p>
+  <p data-i18n="footer_made">Fait avec ✦ en France</p>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// I18N — TRANSLATIONS
+// ══════════════════════════════════════════════════════════════
+const LANGS = {
+  fr: {
+    nav_home:"Accueil",nav_app:"L'app",nav_jobs:"Offres",nav_pricing:"Tarifs",nav_faq:"FAQ",nav_legal:"Légal",nav_cta:"Commencer →",
+    hero_badge:"Bientôt disponible · Rejoins la waitlist",
+    hero_title_html:"Ta carrière<br><em>sans frontières.</em>",
+    hero_sub_html:"Novago connecte les Français qui veulent travailler à l'étranger avec des <strong>mentors expats</strong> — et des offres d'emploi triées pour eux.",
+    hero_email_ph:"ton@email.fr",hero_cta:"Je rejoins →",hero_count_txt:"personnes inscrites · Zéro spam",
+    success_title:"Tu es sur la liste !",success_sub:"On te prévient en avant-première.",
+    how_label:"Comment ça marche",how_title_html:"Simple comme<br><em>bonjour.</em>",how_sub:"Trois étapes pour transformer ton projet d'expatriation en réalité.",
+    step1_title:"Définis ton projet",step1_desc:"Secteur, destination, niveau — Novago match ton profil avec les offres et mentors les plus pertinents.",
+    step2_title:"Parle à un mentor",step2_desc:"Un Français qui vit déjà là-bas. Il connaît les visas, le marché, les quartiers. À partir de 5€ la session.",
+    step3_title:"Passe à l'action",step3_desc:"Tu postules, tu construis ton réseau expat, tu pars. Novago reste avec toi à chaque étape.",
+    stat1:"Pays couverts",stat2:"Session à partir de",stat3:"Mentors vérifiés",stat4:"Temps de réponse",
+    mentors_label:"Tes futurs mentors",mentors_title_html:"Des vrais gens,<br><em>des vraies vies.</em>",mentors_sub:"Chaque mentor a vécu ton projet. Ils fixent leur propre tarif.",
+    available:"Disponible",testi_label:"Ils ont osé",testi_title_html:"Ce qu'ils <em>disent.</em>",
+    become_label:"Tu vis à l'étranger ?",become_title_html:"Ton expat<br><em>a de la valeur.</em>",become_sub:"Aide d'autres Français à se lancer — et fixe toi-même ton tarif.",become_cta:"Devenir mentor →",
+    bf1_t:"Ton tarif, tes règles",bf1_d:"5 à 50€/session. C'est toi qui décides.",bf2_t:"Flexibilité totale",bf2_d:"Ouvre des créneaux uniquement quand tu veux.",bf3_t:"Paiement garanti",bf3_d:"Virement automatique après chaque session.",bf4_t:"Badge vérifié",bf4_d:"Label de confiance visible par toute la communauté.",
+    cta2_label:"Accès anticipé",cta2_title_html:"Prêt à <em>décoller ?</em>",cta2_sub:"Les 500 premiers inscrits accèdent gratuitement à leur première session mentor.",cta2_success:"À très vite !",
+    app_label:"L'application",app_title_html:"Une app pensée<br><em>pour les ambitieux.</em>",app_sub:"Novago c'est bien plus qu'un job board. Une plateforme complète.",
+    app_f1t:"Mentors expats",app_f1d:"Des Français dans +40 pays. Sessions à partir de 5€.",app_f2t:"Offres sélectionnées",app_f2d:"Agrégateur international avec score de matching IA.",app_f3t:"Feed communautaire",app_f3d:"Tips, actus visa, témoignages.",app_f4t:"Guide destinations",app_f4d:"Coût de vie, salaires, visas pour chaque pays.",
+    pwa_info_title:"📱 Installable sur mobile",pwa_info_desc:"Novago fonctionne comme une app native. Ajoute-la à ton écran d'accueil.",
+    jobs_label:"Offres d'emploi",jobs_title_html:"Trouve ton<br><em>poste à l'étranger.</em>",jobs_sub:"Offres agrégées en temps réel depuis les meilleures sources internationales.",
+    jobs_refresh:"↻ Actualiser",
+    pricing_label:"Tarifs",pricing_title_html:"Commence gratuitement.<br><em>Évolue quand tu veux.</em>",pricing_sub:"Gratuit pour démarrer. Les abonnements débloquent ce qui fait vraiment la différence.",
+    bill_monthly:"Mensuel",bill_annual:"Annuel",per_month:"/mois",popular:"Populaire",
+    plan_free_name:"Explorateur",plan_free_tag:"Pour découvrir",plan_free_price:"Gratuit",
+    plan_nomade_name:"Nomade",plan_nomade_tag:"Pour passer à l'action",
+    plan_horizon_name:"Horizon",plan_horizon_tag:"Pour les sérieux",
+    f_free1:"5 offres/semaine",f_free2:"Voir les mentors",f_free3:"1 message/semaine",f_ia:"Matching IA",f_early:"Offres avant-première",f_webinar:"Webinaires live",
+    f_nomade1:"Offres illimitées",f_nomade2:"5 messages/semaine",f_nomade4:"Matching IA basique",f_nomade5:"Kanban candidatures",
+    f_horizon1:"Tout Nomade inclus",f_horizon3:"Matching IA avancé",f_horizon5:"Webinaires 2×/mois",f_horizon6:"1ère session offerte",
+    cta_free:"Commencer gratuitement",cta_trial:"Essai 7 jours gratuits",cta_horizon:"Commencer Horizon",
+    faq_label:"Centre d'aide",faq_title_html:"Tout ce que tu<br><em>veux savoir.</em>",faq_sub:"Des réponses claires sur Novago, les mentors, les abonnements et l'expatriation.",
+    faq_contact_title:"Tu n'as pas trouvé ta réponse ?",faq_contact_sub:"Notre équipe répond sous 24h",faq_contact_cta:"Contacter le support →",
+    lt_cgu:"CGU",lt_cgv:"CGV",lt_ml:"Mentions légales",
+    footer_tagline:"Ta carrière, sans frontières. La plateforme des Français qui osent l'international.",
+    footer_product:"Produit",footer_legal:"Légal",footer_contact:"Contact",footer_become_mentor:"Devenir mentor",footer_press:"Presse",footer_rights:"Tous droits réservés",footer_made:"Fait avec ✦ en France",
+    pwa_title:"Installer Novago",pwa_desc:"Accès rapide depuis ton écran d'accueil",pwa_btn:"Installer",
+  },
+  en: {
+    nav_home:"Home",nav_app:"App",nav_jobs:"Jobs",nav_pricing:"Pricing",nav_faq:"FAQ",nav_legal:"Legal",nav_cta:"Get started →",
+    hero_badge:"Coming soon · Join the waitlist",
+    hero_title_html:"Your career,<br><em>borderless.</em>",
+    hero_sub_html:"Novago connects French speakers who want to work abroad with <strong>expat mentors</strong> — and curated international job listings.",
+    hero_email_ph:"your@email.com",hero_cta:"Join now →",hero_count_txt:"people signed up · No spam",
+    success_title:"You're on the list!",success_sub:"We'll notify you first.",
+    how_label:"How it works",how_title_html:"Simple as<br><em>that.</em>",how_sub:"Three steps to turn your expat dream into reality.",
+    step1_title:"Define your project",step1_desc:"Sector, destination, level — Novago matches your profile with the most relevant offers and mentors.",
+    step2_title:"Talk to a mentor",step2_desc:"A French expat already living there. They know visas, the job market, the neighbourhoods. From €5 per session.",
+    step3_title:"Take action",step3_desc:"Apply, build your expat network, move. Novago stays with you at every step.",
+    stat1:"Countries covered",stat2:"Session from",stat3:"Verified mentors",stat4:"Response time",
+    mentors_label:"Your future mentors",mentors_title_html:"Real people,<br><em>real lives.</em>",mentors_sub:"Every mentor has lived your project. They set their own rate.",
+    available:"Available",testi_label:"They dared",testi_title_html:"What they <em>say.</em>",
+    become_label:"Living abroad?",become_title_html:"Your expat life<br><em>has value.</em>",become_sub:"Help other French speakers take the leap — and set your own rate.",become_cta:"Become a mentor →",
+    bf1_t:"Your rate, your rules",bf1_d:"€5–50/session. You decide.",bf2_t:"Full flexibility",bf2_d:"Open slots only when you want.",bf3_t:"Guaranteed payment",bf3_d:"Automatic transfer after each session.",bf4_t:"Verified badge",bf4_d:"Trust label visible to the whole community.",
+    cta2_label:"Early access",cta2_title_html:"Ready to <em>take off?</em>",cta2_sub:"The first 500 signups get their first mentor session free.",cta2_success:"See you soon!",
+    app_label:"The app",app_title_html:"An app built<br><em>for the ambitious.</em>",app_sub:"Novago is much more than a job board. A complete platform from idea to landing.",
+    app_f1t:"Expat mentors",app_f1d:"French speakers in 40+ countries. Sessions from €5.",app_f2t:"Curated jobs",app_f2d:"International aggregator with AI matching score.",app_f3t:"Community feed",app_f3d:"Tips, visa news, testimonials.",app_f4t:"Destination guide",app_f4d:"Cost of living, salaries, visas for every country.",
+    pwa_info_title:"📱 Installable on mobile",pwa_info_desc:"Novago works like a native app on iOS and Android. Add it to your home screen.",
+    jobs_label:"Job listings",jobs_title_html:"Find your<br><em>job abroad.</em>",jobs_sub:"Real-time aggregated offers from the best international sources.",
+    jobs_refresh:"↻ Refresh",
+    pricing_label:"Pricing",pricing_title_html:"Start for free.<br><em>Upgrade anytime.</em>",pricing_sub:"Free to start. Subscriptions unlock what really makes a difference.",
+    bill_monthly:"Monthly",bill_annual:"Annual",per_month:"/mo",popular:"Popular",
+    plan_free_name:"Explorer",plan_free_tag:"To discover Novago",plan_free_price:"Free",
+    plan_nomade_name:"Nomad",plan_nomade_tag:"To take action",
+    plan_horizon_name:"Horizon",plan_horizon_tag:"For the serious",
+    f_free1:"5 jobs/week",f_free2:"View mentor profiles",f_free3:"1 free message/week",f_ia:"AI matching",f_early:"Early job access",f_webinar:"Live webinars",
+    f_nomade1:"Unlimited jobs",f_nomade2:"5 messages/week",f_nomade4:"Basic AI matching",f_nomade5:"Application Kanban",
+    f_horizon1:"Everything in Nomad",f_horizon3:"Advanced AI matching",f_horizon5:"Webinars 2×/month",f_horizon6:"1st session free",
+    cta_free:"Start for free",cta_trial:"Try free for 7 days",cta_horizon:"Start Horizon",
+    faq_label:"Help center",faq_title_html:"Everything you<br><em>need to know.</em>",faq_sub:"Clear answers about Novago, mentors, subscriptions and expatriation.",
+    faq_contact_title:"Didn't find your answer?",faq_contact_sub:"Our team replies within 24h",faq_contact_cta:"Contact support →",
+    lt_cgu:"Terms of Use",lt_cgv:"Terms of Sale",lt_ml:"Legal notice",
+    footer_tagline:"Your career, borderless. The platform for French speakers who dare to go international.",
+    footer_product:"Product",footer_legal:"Legal",footer_contact:"Contact",footer_become_mentor:"Become a mentor",footer_press:"Press",footer_rights:"All rights reserved",footer_made:"Made with ✦ in France",
+    pwa_title:"Install Novago",pwa_desc:"Quick access from your home screen",pwa_btn:"Install",
+  },
+  de: {
+    nav_home:"Startseite",nav_app:"App",nav_jobs:"Jobs",nav_pricing:"Preise",nav_faq:"FAQ",nav_legal:"Rechtliches",nav_cta:"Starten →",
+    hero_badge:"Bald verfügbar · Jetzt anmelden",
+    hero_title_html:"Deine Karriere,<br><em>grenzenlos.</em>",
+    hero_sub_html:"Novago verbindet Franzosen, die im Ausland arbeiten wollen, mit <strong>Expat-Mentoren</strong> — und ausgewählten internationalen Stellenangeboten.",
+    hero_email_ph:"deine@email.de",hero_cta:"Jetzt anmelden →",hero_count_txt:"Personen registriert · Kein Spam",
+    success_title:"Du bist auf der Liste!",success_sub:"Wir benachrichtigen dich zuerst.",
+    how_label:"So funktioniert's",how_title_html:"Ganz<br><em>einfach.</em>",how_sub:"Drei Schritte, um dein Auslandsprojekt Realität werden zu lassen.",
+    step1_title:"Projekt definieren",step1_desc:"Branche, Ziel, Level — Novago findet die passendsten Angebote und Mentoren für dich.",
+    step2_title:"Mit Mentor sprechen",step2_desc:"Ein Franzose, der bereits dort lebt. Er kennt Visa, Markt, Viertel. Ab 5€ pro Session.",
+    step3_title:"Handeln",step3_desc:"Bewerbungen, Netzwerk aufbauen, umziehen. Novago begleitet dich bei jedem Schritt.",
+    stat1:"Länder abgedeckt",stat2:"Session ab",stat3:"Verifizierte Mentoren",stat4:"Reaktionszeit",
+    mentors_label:"Deine zukünftigen Mentoren",mentors_title_html:"Echte Menschen,<br><em>echte Leben.</em>",mentors_sub:"Jeder Mentor hat dein Projekt erlebt. Sie setzen ihren eigenen Preis.",
+    available:"Verfügbar",testi_label:"Sie haben es gewagt",testi_title_html:"Was sie <em>sagen.</em>",
+    become_label:"Leben im Ausland?",become_title_html:"Dein Expat-Leben<br><em>hat Wert.</em>",become_sub:"Hilf anderen Franzosen beim Start — und setze deinen eigenen Preis.",become_cta:"Mentor werden →",
+    bf1_t:"Dein Preis, deine Regeln",bf1_d:"5–50€/Session. Du entscheidest.",bf2_t:"Volle Flexibilität",bf2_d:"Öffne Slots nur wann du willst.",bf3_t:"Garantierte Zahlung",bf3_d:"Automatische Überweisung nach jeder Session.",bf4_t:"Verifiziertes Abzeichen",bf4_d:"Vertrauenslabel für die gesamte Community.",
+    cta2_label:"Frühzeitiger Zugang",cta2_title_html:"Bereit zum <em>Abheben?</em>",cta2_sub:"Die ersten 500 Anmeldungen erhalten ihre erste Mentor-Session kostenlos.",cta2_success:"Bis bald!",
+    app_label:"Die App",app_title_html:"Eine App für<br><em>Ehrgeizige.</em>",app_sub:"Novago ist viel mehr als eine Jobbörse.",
+    app_f1t:"Expat-Mentoren",app_f1d:"Franzosen in 40+ Ländern. Sessions ab 5€.",app_f2t:"Ausgewählte Jobs",app_f2d:"Internationaler Aggregator mit KI-Matching.",app_f3t:"Community-Feed",app_f3d:"Tipps, Visa-News, Erfahrungsberichte.",app_f4t:"Zielführer",app_f4d:"Lebenshaltungskosten, Gehälter, Visa.",
+    pwa_info_title:"📱 Auf Mobilgeräten installierbar",pwa_info_desc:"Novago funktioniert wie eine native App auf iOS und Android.",
+    jobs_label:"Stellenangebote",jobs_title_html:"Finde deinen<br><em>Job im Ausland.</em>",jobs_sub:"Echtzeit aggregierte Angebote aus den besten internationalen Quellen.",
+    jobs_refresh:"↻ Aktualisieren",
+    pricing_label:"Preise",pricing_title_html:"Kostenlos starten.<br><em>Jederzeit upgraden.</em>",pricing_sub:"Kostenlos starten. Abonnements entsperren, was wirklich den Unterschied macht.",
+    bill_monthly:"Monatlich",bill_annual:"Jährlich",per_month:"/Monat",popular:"Beliebt",
+    plan_free_name:"Explorer",plan_free_tag:"Zum Entdecken",plan_free_price:"Kostenlos",
+    plan_nomade_name:"Nomade",plan_nomade_tag:"Zum Handeln",
+    plan_horizon_name:"Horizon",plan_horizon_tag:"Für Ernsthafte",
+    f_free1:"5 Jobs/Woche",f_free2:"Mentorprofile ansehen",f_free3:"1 kostenlose Nachricht/Woche",f_ia:"KI-Matching",f_early:"Frühzeitiger Jobzugang",f_webinar:"Live-Webinare",
+    f_nomade1:"Unbegrenzte Jobs",f_nomade2:"5 Nachrichten/Woche",f_nomade4:"Basis KI-Matching",f_nomade5:"Bewerbungs-Kanban",
+    f_horizon1:"Alles aus Nomade",f_horizon3:"Erweitertes KI-Matching",f_horizon5:"Webinare 2×/Monat",f_horizon6:"1. Session kostenlos",
+    cta_free:"Kostenlos starten",cta_trial:"7 Tage kostenlos testen",cta_horizon:"Horizon starten",
+    faq_label:"Hilfe",faq_title_html:"Alles was du<br><em>wissen willst.</em>",faq_sub:"Klare Antworten zu Novago, Mentoren, Abonnements und Auswanderung.",
+    faq_contact_title:"Keine Antwort gefunden?",faq_contact_sub:"Unser Team antwortet innerhalb von 24h",faq_contact_cta:"Support kontaktieren →",
+    lt_cgu:"Nutzungsbedingungen",lt_cgv:"Verkaufsbedingungen",lt_ml:"Impressum",
+    footer_tagline:"Deine Karriere, grenzenlos. Die Plattform für Franzosen, die international wagen.",
+    footer_product:"Produkt",footer_legal:"Rechtliches",footer_contact:"Kontakt",footer_become_mentor:"Mentor werden",footer_press:"Presse",footer_rights:"Alle Rechte vorbehalten",footer_made:"Mit ✦ in Frankreich gemacht",
+    pwa_title:"Novago installieren",pwa_desc:"Schneller Zugriff vom Startbildschirm",pwa_btn:"Installieren",
+  },
+  es: {
+    nav_home:"Inicio",nav_app:"App",nav_jobs:"Empleos",nav_pricing:"Precios",nav_faq:"FAQ",nav_legal:"Legal",nav_cta:"Empezar →",
+    hero_badge:"Próximamente · Únete a la lista",
+    hero_title_html:"Tu carrera,<br><em>sin fronteras.</em>",
+    hero_sub_html:"Novago conecta a los francófonos que quieren trabajar en el extranjero con <strong>mentores expats</strong> — y ofertas de empleo internacionales.",
+    hero_email_ph:"tu@email.com",hero_cta:"Me uno →",hero_count_txt:"personas registradas · Sin spam",
+    success_title:"¡Estás en la lista!",success_sub:"Te avisaremos primero.",
+    how_label:"Cómo funciona",how_title_html:"Sencillo<br><em>como hola.</em>",how_sub:"Tres pasos para convertir tu proyecto expat en realidad.",
+    step1_title:"Define tu proyecto",step1_desc:"Sector, destino, nivel — Novago hace match con las mejores ofertas y mentores para ti.",
+    step2_title:"Habla con un mentor",step2_desc:"Un francés que ya vive allí. Conoce los visados, el mercado, los barrios. Desde 5€ la sesión.",
+    step3_title:"Pasa a la acción",step3_desc:"Postúlate, construye tu red expat, emigra. Novago te acompaña en cada paso.",
+    stat1:"Países cubiertos",stat2:"Sesión desde",stat3:"Mentores verificados",stat4:"Tiempo de respuesta",
+    mentors_label:"Tus futuros mentores",mentors_title_html:"Personas reales,<br><em>vidas reales.</em>",mentors_sub:"Cada mentor ha vivido tu proyecto. Ellos fijan su propio precio.",
+    available:"Disponible",testi_label:"Se atrevieron",testi_title_html:"Lo que <em>dicen.</em>",
+    become_label:"¿Vives en el extranjero?",become_title_html:"Tu vida expat<br><em>tiene valor.</em>",become_sub:"Ayuda a otros francófonos a empezar — y fija tú mismo tu tarifa.",become_cta:"Convertirme en mentor →",
+    bf1_t:"Tu tarifa, tus reglas",bf1_d:"5–50€/sesión. Tú decides.",bf2_t:"Flexibilidad total",bf2_d:"Abre franjas solo cuando quieras.",bf3_t:"Pago garantizado",bf3_d:"Transferencia automática tras cada sesión.",bf4_t:"Insignia verificada",bf4_d:"Etiqueta de confianza visible para toda la comunidad.",
+    cta2_label:"Acceso anticipado",cta2_title_html:"¿Listo para <em>despegar?</em>",cta2_sub:"Los primeros 500 inscritos acceden gratis a su primera sesión con un mentor.",cta2_success:"¡Hasta pronto!",
+    app_label:"La app",app_title_html:"Una app pensada<br><em>para ambiciosos.</em>",app_sub:"Novago es mucho más que un portal de empleo.",
+    app_f1t:"Mentores expats",app_f1d:"Francófonos en +40 países. Sesiones desde 5€.",app_f2t:"Empleos seleccionados",app_f2d:"Agregador internacional con puntuación IA.",app_f3t:"Feed comunitario",app_f3d:"Consejos, noticias de visados, testimonios.",app_f4t:"Guía de destinos",app_f4d:"Coste de vida, salarios, visados.",
+    pwa_info_title:"📱 Instalable en móvil",pwa_info_desc:"Novago funciona como app nativa en iOS y Android.",
+    jobs_label:"Ofertas de empleo",jobs_title_html:"Encuentra tu<br><em>trabajo en el extranjero.</em>",jobs_sub:"Ofertas agregadas en tiempo real desde las mejores fuentes internacionales.",
+    jobs_refresh:"↻ Actualizar",
+    pricing_label:"Precios",pricing_title_html:"Empieza gratis.<br><em>Mejora cuando quieras.</em>",pricing_sub:"Gratis para empezar. Las suscripciones desbloquean lo que realmente marca la diferencia.",
+    bill_monthly:"Mensual",bill_annual:"Anual",per_month:"/mes",popular:"Popular",
+    plan_free_name:"Explorador",plan_free_tag:"Para descubrir",plan_free_price:"Gratis",
+    plan_nomade_name:"Nómada",plan_nomade_tag:"Para pasar a la acción",
+    plan_horizon_name:"Horizon",plan_horizon_tag:"Para los serios",
+    f_free1:"5 empleos/semana",f_free2:"Ver perfiles de mentores",f_free3:"1 mensaje gratis/semana",f_ia:"Matching IA",f_early:"Empleos en avant-première",f_webinar:"Webinars en vivo",
+    f_nomade1:"Empleos ilimitados",f_nomade2:"5 mensajes/semana",f_nomade4:"Matching IA básico",f_nomade5:"Kanban candidaturas",
+    f_horizon1:"Todo Nómada incluido",f_horizon3:"Matching IA avanzado",f_horizon5:"Webinars 2×/mes",f_horizon6:"1ª sesión gratis",
+    cta_free:"Empezar gratis",cta_trial:"Probar 7 días gratis",cta_horizon:"Empezar Horizon",
+    faq_label:"Centro de ayuda",faq_title_html:"Todo lo que<br><em>quieres saber.</em>",faq_sub:"Respuestas claras sobre Novago, mentores, suscripciones y expatriación.",
+    faq_contact_title:"¿No encontraste tu respuesta?",faq_contact_sub:"Nuestro equipo responde en 24h",faq_contact_cta:"Contactar soporte →",
+    lt_cgu:"Términos de uso",lt_cgv:"Términos de venta",lt_ml:"Aviso legal",
+    footer_tagline:"Tu carrera, sin fronteras. La plataforma para francófonos que se atreven.",
+    footer_product:"Producto",footer_legal:"Legal",footer_contact:"Contacto",footer_become_mentor:"Ser mentor",footer_press:"Prensa",footer_rights:"Todos los derechos reservados",footer_made:"Hecho con ✦ en Francia",
+    pwa_title:"Instalar Novago",pwa_desc:"Acceso rápido desde tu pantalla de inicio",pwa_btn:"Instalar",
+  },
+  pt: {
+    nav_home:"Início",nav_app:"App",nav_jobs:"Empregos",nav_pricing:"Preços",nav_faq:"FAQ",nav_legal:"Legal",nav_cta:"Começar →",
+    hero_badge:"Em breve · Junte-se à lista",
+    hero_title_html:"A sua carreira,<br><em>sem fronteiras.</em>",
+    hero_sub_html:"Novago conecta francófonos que querem trabalhar no estrangeiro com <strong>mentores expats</strong> — e ofertas de emprego curadas.",
+    hero_email_ph:"seu@email.pt",hero_cta:"Juntar-me →",hero_count_txt:"pessoas inscritas · Sem spam",
+    success_title:"Estás na lista!",success_sub:"Vamos avisá-lo primeiro.",
+    how_label:"Como funciona",how_title_html:"Simples<br><em>assim.</em>",how_sub:"Três passos para transformar o teu projeto expat em realidade.",
+    step1_title:"Define o teu projeto",step1_desc:"Setor, destino, nível — Novago encontra as melhores ofertas e mentores para ti.",
+    step2_title:"Fala com um mentor",step2_desc:"Um francês que já vive lá. Conhece vistos, mercado, bairros. A partir de 5€ por sessão.",
+    step3_title:"Passa à ação",step3_desc:"Candidata-te, constrói a tua rede expat, parte. Novago fica contigo em cada etapa.",
+    stat1:"Países cobertos",stat2:"Sessão a partir de",stat3:"Mentores verificados",stat4:"Tempo de resposta",
+    mentors_label:"Os teus futuros mentores",mentors_title_html:"Pessoas reais,<br><em>vidas reais.</em>",mentors_sub:"Cada mentor já viveu o teu projeto. Eles definem o seu próprio preço.",
+    available:"Disponível",testi_label:"Eles ousaram",testi_title_html:"O que <em>dizem.</em>",
+    become_label:"Vives no estrangeiro?",become_title_html:"A tua vida expat<br><em>tem valor.</em>",become_sub:"Ajuda outros francófonos a começar — e define o teu próprio preço.",become_cta:"Tornar-me mentor →",
+    bf1_t:"O teu preço, as tuas regras",bf1_d:"5–50€/sessão. Decides tu.",bf2_t:"Flexibilidade total",bf2_d:"Abre slots apenas quando quiseres.",bf3_t:"Pagamento garantido",bf3_d:"Transferência automática após cada sessão.",bf4_t:"Distintivo verificado",bf4_d:"Rótulo de confiança visível para toda a comunidade.",
+    cta2_label:"Acesso antecipado",cta2_title_html:"Pronto para <em>descolar?</em>",cta2_sub:"Os primeiros 500 inscritos têm a primeira sessão com mentor grátis.",cta2_success:"Até breve!",
+    app_label:"A app",app_title_html:"Uma app pensada<br><em>para ambiciosos.</em>",app_sub:"Novago é muito mais do que um portal de emprego.",
+    app_f1t:"Mentores expats",app_f1d:"Francófonos em +40 países. Sessões a partir de 5€.",app_f2t:"Empregos selecionados",app_f2d:"Agregador internacional com pontuação IA.",app_f3t:"Feed comunitário",app_f3d:"Dicas, notícias de visto, testemunhos.",app_f4t:"Guia de destinos",app_f4d:"Custo de vida, salários, vistos.",
+    pwa_info_title:"📱 Instalável no telemóvel",pwa_info_desc:"Novago funciona como app nativa em iOS e Android.",
+    jobs_label:"Ofertas de emprego",jobs_title_html:"Encontra o teu<br><em>emprego no estrangeiro.</em>",jobs_sub:"Ofertas agregadas em tempo real das melhores fontes internacionais.",
+    jobs_refresh:"↻ Atualizar",
+    pricing_label:"Preços",pricing_title_html:"Começa de graça.<br><em>Evolui quando quiseres.</em>",pricing_sub:"Grátis para começar. As subscrições desbloqueiam o que realmente faz a diferença.",
+    bill_monthly:"Mensal",bill_annual:"Anual",per_month:"/mês",popular:"Popular",
+    plan_free_name:"Explorador",plan_free_tag:"Para descobrir",plan_free_price:"Grátis",
+    plan_nomade_name:"Nómada",plan_nomade_tag:"Para passar à ação",
+    plan_horizon_name:"Horizon",plan_horizon_tag:"Para os sérios",
+    f_free1:"5 empregos/semana",f_free2:"Ver perfis de mentores",f_free3:"1 mensagem grátis/semana",f_ia:"Matching IA",f_early:"Empregos antecipados",f_webinar:"Webinars ao vivo",
+    f_nomade1:"Empregos ilimitados",f_nomade2:"5 mensagens/semana",f_nomade4:"Matching IA básico",f_nomade5:"Kanban candidaturas",
+    f_horizon1:"Tudo do Nómada incluído",f_horizon3:"Matching IA avançado",f_horizon5:"Webinars 2×/mês",f_horizon6:"1ª sessão grátis",
+    cta_free:"Começar de graça",cta_trial:"Experimentar 7 dias grátis",cta_horizon:"Começar Horizon",
+    faq_label:"Centro de ajuda",faq_title_html:"Tudo o que<br><em>queres saber.</em>",faq_sub:"Respostas claras sobre Novago, mentores, subscrições e expatriação.",
+    faq_contact_title:"Não encontraste a tua resposta?",faq_contact_sub:"A nossa equipa responde em 24h",faq_contact_cta:"Contactar suporte →",
+    lt_cgu:"Termos de uso",lt_cgv:"Termos de venda",lt_ml:"Aviso legal",
+    footer_tagline:"A tua carreira, sem fronteiras. A plataforma para francófonos que ousam.",
+    footer_product:"Produto",footer_legal:"Legal",footer_contact:"Contacto",footer_become_mentor:"Ser mentor",footer_press:"Imprensa",footer_rights:"Todos os direitos reservados",footer_made:"Feito com ✦ em França",
+    pwa_title:"Instalar Novago",pwa_desc:"Acesso rápido desde o teu ecrã inicial",pwa_btn:"Instalar",
+  },
+  ar: {
+    nav_home:"الرئيسية",nav_app:"التطبيق",nav_jobs:"وظائف",nav_pricing:"الأسعار",nav_faq:"أسئلة شائعة",nav_legal:"قانوني",nav_cta:"ابدأ الآن ←",
+    hero_badge:"قريباً · انضم للقائمة",
+    hero_title_html:"مسيرتك المهنية،<br><em>بلا حدود.</em>",
+    hero_sub_html:"نوفاغو يربط الفرنسيين الراغبين في العمل بالخارج بـ<strong>مرشدين مغتربين</strong> — وعروض عمل دولية مختارة.",
+    hero_email_ph:"بريدك@الإلكتروني.com",hero_cta:"← انضم الآن",hero_count_txt:"شخص مسجل · بدون بريد مزعج",
+    success_title:"!أنت على القائمة",success_sub:".سنُخطرك أولاً",
+    how_label:"كيف يعمل",how_title_html:"بسيط<br><em>للغاية.</em>",how_sub:".ثلاث خطوات لتحويل مشروعك في الخارج إلى حقيقة",
+    step1_title:"حدد مشروعك",step1_desc:".القطاع، الوجهة، المستوى — نوفاغو يطابق ملفك مع أفضل العروض والمرشدين",
+    step2_title:"تحدث مع مرشد",step2_desc:".فرنسي يعيش هناك بالفعل. يعرف التأشيرات والسوق والأحياء. من 5€ للجلسة",
+    step3_title:"اتخذ إجراءً",step3_desc:".تقدم، ابنِ شبكتك، انتقل. نوفاغو يبقى معك في كل خطوة",
+    stat1:"دولة مغطاة",stat2:"جلسة تبدأ من",stat3:"مرشدون موثوقون",stat4:"وقت الاستجابة",
+    mentors_label:"مرشدوك المستقبليون",mentors_title_html:"أشخاص حقيقيون،<br><em>حيوات حقيقية.</em>",mentors_sub:".عاش كل مرشد مشروعك. هم يحددون أسعارهم بأنفسهم",
+    available:"متاح",testi_label:"لقد تجرأوا",testi_title_html:"ما <em>يقولونه.</em>",
+    become_label:"تعيش في الخارج؟",become_title_html:"حياتك كمغترب<br><em>لها قيمة.</em>",become_sub:".ساعد الفرنسيين الآخرين على البدء — وحدد سعرك بنفسك",become_cta:"← كن مرشداً",
+    bf1_t:"سعرك، قواعدك",bf1_d:".5–50€ للجلسة. أنت تقرر",bf2_t:"مرونة تامة",bf2_d:".افتح مواعيد فقط عندما تريد",bf3_t:"دفع مضمون",bf3_d:".تحويل تلقائي بعد كل جلسة",bf4_t:"شارة موثوقة",bf4_d:".علامة ثقة مرئية لجميع المجتمع",
+    cta2_label:"وصول مبكر",cta2_title_html:"مستعد<br><em>للإقلاع؟</em>",cta2_sub:".أول 500 مسجل يحصلون على أول جلسة مع مرشد مجاناً",cta2_success:"!إلى اللقاء",
+    app_label:"التطبيق",app_title_html:"تطبيق مصمم<br><em>للطموحين.</em>",app_sub:".نوفاغو أكثر بكثير من مجرد لوحة وظائف",
+    app_f1t:"مرشدون مغتربون",app_f1d:".فرنسيون في +40 دولة. جلسات من 5€",app_f2t:"وظائف مختارة",app_f2d:".مجمِّع دولي مع نقاط مطابقة بالذكاء الاصطناعي",app_f3t:"موجز المجتمع",app_f3d:".نصائح، أخبار التأشيرات، شهادات",app_f4t:"دليل الوجهات",app_f4d:".تكلفة المعيشة، الرواتب، التأشيرات",
+    pwa_info_title:"📱 قابل للتثبيت على الهاتف",pwa_info_desc:".نوفاغو يعمل كتطبيق أصلي على iOS و Android",
+    jobs_label:"عروض العمل",jobs_title_html:"اعثر على<br><em>وظيفتك في الخارج.</em>",jobs_sub:".عروض مجمّعة في الوقت الفعلي من أفضل المصادر الدولية",
+    jobs_refresh:"↻ تحديث",
+    pricing_label:"الأسعار",pricing_title_html:"ابدأ مجاناً.<br><em>طور في أي وقت.</em>",pricing_sub:".مجاني للبداية. الاشتراكات تفتح ما يُحدث الفرق",
+    bill_monthly:"شهري",bill_annual:"سنوي",per_month:"/شهر",popular:"الأكثر شيوعاً",
+    plan_free_name:"مستكشف",plan_free_tag:"للاكتشاف",plan_free_price:"مجاني",
+    plan_nomade_name:"رحال",plan_nomade_tag:"للعمل والتقدم",
+    plan_horizon_name:"أفق",plan_horizon_tag:"للجادين",
+    f_free1:"5 وظائف/أسبوع",f_free2:"عرض ملفات المرشدين",f_free3:"رسالة مجانية/أسبوع",f_ia:"مطابقة ذكاء اصطناعي",f_early:"وظائف حصرية مبكرة",f_webinar:"ندوات مباشرة",
+    f_nomade1:"وظائف غير محدودة",f_nomade2:"5 رسائل/أسبوع",f_nomade4:"مطابقة ذكاء اصطناعي أساسية",f_nomade5:"لوحة تتبع الطلبات",
+    f_horizon1:"كل محتوى رحال مشمول",f_horizon3:"مطابقة ذكاء اصطناعي متقدمة",f_horizon5:"ندوتان/شهر",f_horizon6:"الجلسة الأولى مجاناً",
+    cta_free:"ابدأ مجاناً",cta_trial:"جرب 7 أيام مجاناً",cta_horizon:"ابدأ أفق",
+    faq_label:"مركز المساعدة",faq_title_html:"كل ما<br><em>تريد معرفته.</em>",faq_sub:".إجابات واضحة حول نوفاغو والمرشدين والاشتراكات والاغتراب",
+    faq_contact_title:"لم تجد إجابتك؟",faq_contact_sub:"فريقنا يرد خلال 24 ساعة",faq_contact_cta:"← تواصل مع الدعم",
+    lt_cgu:"شروط الاستخدام",lt_cgv:"شروط البيع",lt_ml:"إشعار قانوني",
+    footer_tagline:".مسيرتك المهنية، بلا حدود. المنصة للفرنسيين الذين يجرؤون على الدولية",
+    footer_product:"المنتج",footer_legal:"قانوني",footer_contact:"اتصل",footer_become_mentor:"كن مرشداً",footer_press:"صحافة",footer_rights:"جميع الحقوق محفوظة",footer_made:"صُنع بـ ✦ في فرنسا",
+    pwa_title:"تثبيت نوفاغو",pwa_desc:"وصول سريع من الشاشة الرئيسية",pwa_btn:"تثبيت",
+  }
+};
+
+const LANG_META = {
+  fr:{flag:"🇫🇷",label:"FR",dir:"ltr"},
+  en:{flag:"🇬🇧",label:"EN",dir:"ltr"},
+  de:{flag:"🇩🇪",label:"DE",dir:"ltr"},
+  es:{flag:"🇪🇸",label:"ES",dir:"ltr"},
+  pt:{flag:"🇵🇹",label:"PT",dir:"ltr"},
+  ar:{flag:"🇸🇦",label:"AR",dir:"rtl"}
+};
+
+let currentLang = 'fr';
+
+function setLang(lang) {
+  currentLang = lang;
+  const t = LANGS[lang] || LANGS.fr;
+  const meta = LANG_META[lang] || LANG_META.fr;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = meta.dir;
+  // Update all translatable elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if (t[key] !== undefined) el.placeholder = t[key];
+  });
+  // Update lang button
+  document.getElementById('lang-btn').textContent = meta.flag + ' ' + meta.label + ' ▾';
+  // Update active state
+  document.querySelectorAll('.lang-opt').forEach(el => {
+    el.classList.toggle('active', el.textContent.includes(meta.flag));
+  });
+  // Rebuild FAQ
+  buildFaq('main-faq');
+  closeLangDrop();
+}
+
+function toggleLangDrop() {
+  document.getElementById('lang-drop').classList.toggle('open');
+}
+function closeLangDrop() {
+  document.getElementById('lang-drop').classList.remove('open');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.lang-wrap')) closeLangDrop();
+});
+
+// ══════════════════════════════════════════════════════════════
+// THEME
+// ══════════════════════════════════════════════════════════════
+let isDark = true;
+function toggleTheme() {
+  isDark = !isDark;
+  document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  document.getElementById('theme-btn').textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('novago-theme', isDark ? 'dark' : 'light');
+}
+// Restore saved theme
+const savedTheme = localStorage.getItem('novago-theme');
+if (savedTheme === 'light') { isDark = false; document.body.setAttribute('data-theme','light'); document.getElementById('theme-btn').textContent = '☀️'; }
+
+// ══════════════════════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════════════════════
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+  const page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.querySelectorAll('.nav-link').forEach(b => {
+    const navKey = 'nav_' + id;
+    if (b.getAttribute('data-i18n') === navKey) b.classList.add('active');
+  });
+  setTimeout(initReveal, 80);
+  if (id === 'jobs') loadJobs();
+}
+
+function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('open'); }
+function closeMenu() { document.getElementById('mobile-menu').classList.remove('open'); }
+
+// ══════════════════════════════════════════════════════════════
+// LEGAL SUB-TABS
+// ══════════════════════════════════════════════════════════════
+function showLegal(tab) {
+  ['cgu','cgv','ml'].forEach(t => {
+    document.getElementById('legal-' + t).style.display = t === tab ? 'block' : 'none';
+    const btn = document.getElementById('lt-' + t);
+    if (btn) {
+      if (t === tab) { btn.style.background = 'var(--ac-dim)'; btn.style.borderColor = 'var(--ac-b)'; btn.style.color = 'var(--accent)'; }
+      else { btn.style.background = 'transparent'; btn.style.borderColor = 'var(--border)'; btn.style.color = 'var(--muted)'; }
+    }
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+// REVEAL ON SCROLL
+// ══════════════════════════════════════════════════════════════
+function initReveal() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal:not(.vis)').forEach(el => obs.observe(el));
+}
+
+// ══════════════════════════════════════════════════════════════
+// MARQUEE
+// ══════════════════════════════════════════════════════════════
+function buildMarquee() {
+  const dests = ["🇺🇸 États-Unis","🇩🇪 Allemagne","🇨🇦 Canada","🇦🇺 Australie","🇮🇪 Irlande","🇬🇧 Royaume-Uni","🇸🇪 Suède","🇳🇱 Pays-Bas","🇸🇬 Singapour","🇦🇪 Dubaï","🇨🇭 Suisse","🇯🇵 Japon","🇳🇴 Norvège","🇵🇹 Portugal","🇪🇸 Espagne","🇧🇪 Belgique","🇳🇿 N.-Zélande","🇦🇹 Autriche"];
+  const el = document.getElementById('marquee-home');
+  if (!el) return;
+  el.innerHTML = '';
+  [...dests, ...dests].forEach(d => {
+    const item = document.createElement('div');
+    item.className = 'marquee-item';
+    item.innerHTML = `${d}<div class="marquee-sep"></div>`;
+    el.appendChild(item);
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+// WAITLIST
+// ══════════════════════════════════════════════════════════════
+let wCount = 247;
+async function submitWaitlist(e, form) {
+  e.preventDefault();
+  const email = form === 'hero'
+    ? document.getElementById('hero-email').value
+    : document.getElementById('cta2-email').value;
+  try {
+    const resp = await fetch('https://formspree.io/f/xykoayao', {
+      method: 'POST',
+      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      body: JSON.stringify({email: email})
+    });
+    const data = await resp.json();
+    if (data.ok) {
+      wCount++;
+      if (form === 'hero') {
+        document.getElementById('hero-form-wrap').style.display = 'none';
+        document.getElementById('hero-success').style.display = 'flex';
+      } else {
+        document.getElementById('cta2-form').style.display = 'none';
+        document.getElementById('cta2-success').style.display = 'flex';
+      }
+    } else {
+      alert('Une erreur est survenue. Réessaie ou contacte-nous à novagoteamfr@gmail.com');
+    }
+  } catch(err) {
+    alert('Erreur réseau. Réessaie dans quelques instants.');
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// BILLING TOGGLE
+// ══════════════════════════════════════════════════════════════
+function setBilling(mode) {
+  document.getElementById('bill-m').classList.toggle('active', mode === 'm');
+  document.getElementById('bill-a').classList.toggle('active', mode === 'a');
+  const t = LANGS[currentLang] || LANGS.fr;
+  if (mode === 'a') {
+    document.getElementById('p-nomade').textContent = '7';
+    document.getElementById('p-nomade-per').textContent = '/mois · 79€/an';
+    document.getElementById('p-horizon').textContent = '13';
+    document.getElementById('p-horizon-per').textContent = '/mois · 159€/an';
+  } else {
+    document.getElementById('p-nomade').textContent = '9';
+    document.getElementById('p-nomade-per').innerHTML = t.per_month || '/mois';
+    document.getElementById('p-horizon').textContent = '19';
+    document.getElementById('p-horizon-per').innerHTML = t.per_month || '/mois';
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// FAQ
+// ══════════════════════════════════════════════════════════════
+const faqData = [
+  { q:"C'est quoi exactement Novago ?", a:"Novago est une plateforme qui aide les Français à travailler à l'étranger. Elle combine un <strong>agrégateur d'offres</strong> internationales, un réseau de <strong>mentors expats français</strong> disponibles en session de coaching, et une communauté active." },
+  { q:"Pour qui est fait Novago ?", a:"Novago s'adresse à tout Français ou francophone qui envisage une carrière à l'étranger : jeune diplômé pour un PVT, cadre en mobilité internationale, ou professionnel qui veut changer de pays. <strong>Aucun niveau minimum</strong> requis." },
+  { q:"Novago est-il disponible maintenant ?", a:"Novago est en phase de développement. Rejoins la <strong>waitlist gratuite</strong> pour être parmi les premiers à y accéder. Les 500 premiers bénéficient d'une session mentor offerte." },
+  { q:"Qu'est-ce qu'un mentor Novago ?", a:"Un mentor Novago est un <strong>Français vivant à l'étranger</strong> qui partage son expérience en sessions de conseil individuelles. Ce n'est pas un consultant certifié — c'est quelqu'un qui a vécu exactement ce que tu projettes." },
+  { q:"Comment sont vérifiés les mentors ?", a:"Chaque mentor passe par : validation d'identité, vérification de résidence à l'étranger, et modération du profil. Les mentors vérifiés reçoivent un <strong>badge visible</strong> sur leur profil." },
+  { q:"Comment fonctionne le paiement des sessions ?", a:"Tu réserves un créneau. Le paiement est <strong>autorisé</strong> à la réservation mais <strong>débité uniquement à la fin</strong>. Annulation gratuite jusqu'à 2h avant. Novago prélève 15–20% de commission." },
+  { q:"Puis-je utiliser Novago sans payer ?", a:"Oui ! Le plan <strong>Explorateur est entièrement gratuit</strong>. Il donne accès à 5 offres/semaine, aux profils mentors, à 1 message gratuit/semaine et au feed communauté." },
+  { q:"Comment annuler mon abonnement ?", a:"Depuis ton espace personnel, sans frais. L'annulation prend effet à la fin de la période. <strong>Aucun remboursement prorata</strong> mais tu gardes l'accès jusqu'à échéance." },
+  { q:"Novago est-il disponible sur mobile ?", a:"Oui ! Novago est une <strong>Progressive Web App (PWA)</strong> installable sur iOS et Android depuis ton navigateur. Ajoute-la à ton écran d'accueil pour une expérience app native — sans passer par l'App Store." },
+  { q:"Puis-je devenir mentor si je vis déjà à l'étranger ?", a:"Absolument — c'est fait pour toi ! Inscris-toi, complète ton profil expat, indique ta résidence et envoie ton dossier. Une fois validé, tu configures tes créneaux et ton tarif. Minimum 5€/session." },
+];
+
+function buildFaq(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = '';
+  faqData.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'faq-item';
+    div.innerHTML = `<button class="faq-q" onclick="toggleFaq(this)">${item.q}<span class="faq-arrow">▾</span></button><div class="faq-a"><p>${item.a}</p></div>`;
+    el.appendChild(div);
+  });
+}
+
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ══════════════════════════════════════════════════════════════
+// JOBS — REAL API INTEGRATION
+// ══════════════════════════════════════════════════════════════
+let allJobs = [];
+let jobsLoaded = false;
+
+// Fallback curated jobs when APIs are unavailable
+const fallbackJobs = [
+  { id:'f1', title:'Customer Experience Manager', company:'Stripe', location:'Dublin, Ireland', country:'ireland', salary:'€65,000', type:'fulltime', sector:'tech', url:'https://stripe.com/jobs', logo:'💳', match:92, source:'Featured', tags:['CX','Tech','Fintech'] },
+  { id:'f2', title:'Operations Manager', company:'Tesla', location:'Manchester, UK', country:'uk', salary:'£62,000', type:'fulltime', sector:'ops', url:'https://tesla.com/careers', logo:'⚡', match:95, source:'Featured', tags:['Ops','Auto','Premium'] },
+  { id:'f3', title:'KPI & Performance Lead', company:'Amazon', location:'Amsterdam, Netherlands', country:'netherlands', salary:'€68,000', type:'fulltime', sector:'ops', url:'https://amazon.jobs', logo:'📦', match:90, source:'Featured', tags:['KPI','Ops','E-commerce'] },
+  { id:'f4', title:'Engineering Manager', company:'N26', location:'Berlin, Germany', country:'germany', salary:'€78,000', type:'fulltime', sector:'tech', url:'https://n26.com/en-eu/careers', logo:'🏦', match:82, source:'Featured', tags:['Fintech','Tech','Leadership'] },
+  { id:'f5', title:'Head of Sales EMEA', company:'HubSpot', location:'Dublin, Ireland', country:'ireland', salary:'€85,000', type:'fulltime', sector:'sales', url:'https://hubspot.com/jobs', logo:'🎯', match:78, source:'Featured', tags:['Sales','SaaS','Leadership'] },
+  { id:'f6', title:'Finance Controller', company:'HSBC', location:'Dubai, UAE', country:'uae', salary:'AED 28,000/mo', type:'fulltime', sector:'finance', url:'https://hsbc.com/careers', logo:'🏛️', match:75, source:'Featured', tags:['Finance','UAE','Tax-free'] },
+  { id:'f7', title:'Product Manager - Payments', company:'Revolut', location:'London, UK', country:'uk', salary:'£75,000', type:'fulltime', sector:'tech', url:'https://revolut.com/careers', logo:'💜', match:80, source:'Featured', tags:['Product','Fintech','PM'] },
+  { id:'f8', title:'Marketing Director', company:'Ubisoft', location:'Montreal, Canada', country:'canada', salary:'CAD 110,000', type:'fulltime', sector:'marketing', url:'https://ubisoft.com/careers', logo:'🎮', match:73, source:'Featured', tags:['Marketing','Gaming','Canada'] },
+  { id:'f9', title:'Fleet Operations Coordinator', company:'Sixt', location:'Munich, Germany', country:'germany', salary:'€54,000', type:'fulltime', sector:'ops', url:'https://sixt.com/careers', logo:'🚗', match:88, source:'Featured', tags:['Fleet','Auto','Ops'] },
+  { id:'f10', title:'Data Analyst', company:'Spotify', location:'Stockholm, Sweden', country:'sweden', salary:'SEK 58,000/mo', type:'fulltime', sector:'tech', url:'https://spotify.com/jobs', logo:'🎵', match:70, source:'Featured', tags:['Data','Tech','Music'] },
+  { id:'f11', title:'Customer Success Manager', company:'Salesforce', location:'London, UK', country:'uk', salary:'£60,000', type:'fulltime', sector:'sales', url:'https://salesforce.com/careers', logo:'☁️', match:86, source:'Featured', tags:['CS','CRM','SaaS'] },
+  { id:'f12', title:'Operations Director', company:'Lazada', location:'Singapore', country:'singapore', salary:'SGD 12,000/mo', type:'fulltime', sector:'ops', url:'https://lazada.com/careers', logo:'🛒', match:77, source:'Featured', tags:['Ops','Asia','E-commerce'] },
+];
+
+async function loadJobs() {
+  if (jobsLoaded) { renderJobs(allJobs); return; }
+  showLoader();
+  try {
+    // Try Remotive API (CORS-friendly, free)
+    const resp = await fetch('https://remotive.com/api/remote-jobs?category=management&limit=20', { signal: AbortSignal.timeout(5000) });
+    if (resp.ok) {
+      const data = await resp.json();
+      const mapped = (data.jobs || []).slice(0, 16).map((j, i) => ({
+        id: 'r' + i,
+        title: j.title,
+        company: j.company_name,
+        location: j.candidate_required_location || 'Remote / International',
+        country: detectCountry(j.candidate_required_location || ''),
+        salary: j.salary || '',
+        type: 'remote',
+        sector: mapSector(j.category),
+        url: j.url,
+        logo: '🌐',
+        match: Math.floor(Math.random() * 25) + 68,
+        source: 'Remotive',
+        tags: [j.category || 'Remote', 'International'],
+      }));
+      allJobs = [...fallbackJobs, ...mapped];
+    } else { allJobs = fallbackJobs; }
+  } catch (e) { allJobs = fallbackJobs; }
+  jobsLoaded = true;
+  filterJobs();
+}
+
+function detectCountry(loc) {
+  const l = loc.toLowerCase();
+  if (l.includes('ireland') || l.includes('dublin')) return 'ireland';
+  if (l.includes('germany') || l.includes('berlin') || l.includes('munich')) return 'germany';
+  if (l.includes('uk') || l.includes('united kingdom') || l.includes('london')) return 'uk';
+  if (l.includes('canada') || l.includes('toronto') || l.includes('montreal')) return 'canada';
+  if (l.includes('netherlands') || l.includes('amsterdam')) return 'netherlands';
+  if (l.includes('usa') || l.includes('united states') || l.includes('new york')) return 'usa';
+  if (l.includes('singapore')) return 'singapore';
+  if (l.includes('dubai') || l.includes('uae')) return 'uae';
+  return '';
+}
+
+function mapSector(cat) {
+  const c = (cat || '').toLowerCase();
+  if (c.includes('software') || c.includes('tech') || c.includes('devops') || c.includes('data') || c.includes('product')) return 'tech';
+  if (c.includes('marketing') || c.includes('content') || c.includes('social')) return 'marketing';
+  if (c.includes('finance') || c.includes('account')) return 'finance';
+  if (c.includes('sales') || c.includes('business dev')) return 'sales';
+  if (c.includes('customer') || c.includes('support') || c.includes('ops') || c.includes('management')) return 'ops';
+  return 'tech';
+}
+
+function showLoader() {
+  document.getElementById('jobs-container').innerHTML = `<div class="loader" style="grid-column:1/-1;"><div class="spinner"></div><span>Chargement des offres en temps réel...</span></div>`;
+  document.getElementById('jobs-count').textContent = '';
+}
+
+function filterJobs() {
+  const q = (document.getElementById('job-search')?.value || '').toLowerCase();
+  const country = document.getElementById('job-country')?.value || '';
+  const type = document.getElementById('job-type')?.value || '';
+  const sector = document.getElementById('job-sector')?.value || '';
+  const filtered = allJobs.filter(j => {
+    const matchQ = !q || j.title.toLowerCase().includes(q) || j.company.toLowerCase().includes(q) || j.location.toLowerCase().includes(q);
+    const matchC = !country || j.country === country;
+    const matchT = !type || j.type === type;
+    const matchS = !sector || j.sector === sector;
+    return matchQ && matchC && matchT && matchS;
+  });
+  renderJobs(filtered);
+}
+
+function renderJobs(jobs) {
+  const container = document.getElementById('jobs-container');
+  const countEl = document.getElementById('jobs-count');
+  if (!container) return;
+  countEl.textContent = `${jobs.length} offre${jobs.length !== 1 ? 's' : ''} trouvée${jobs.length !== 1 ? 's' : ''}`;
+  if (jobs.length === 0) {
+    container.innerHTML = `<div class="no-results" style="grid-column:1/-1;"><p style="font-size:32px;margin-bottom:12px;">🔍</p><p style="font-weight:600;margin-bottom:6px;">Aucune offre trouvée</p><p style="font-size:13px;color:var(--text2);">Essaie d'autres filtres ou élargis ta recherche</p></div>`;
+    return;
+  }
+  container.innerHTML = jobs.map(j => `
+    <div class="job-card" onclick="window.open('${j.url}','_blank')">
+      <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;">
+        <div class="job-logo">${j.logo}</div>
+        <div style="flex:1;min-width:0;">
+          <div class="job-title">${j.title}</div>
+          <div class="job-company">${j.company} · ${j.location}</div>
+        </div>
+        <span class="badge" style="background:var(--ac-dim);color:var(--accent);border:1px solid var(--ac-b);flex-shrink:0;font-size:9px;">${j.source}</span>
+      </div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;">
+        ${j.tags.slice(0,3).map(t => `<span class="tag">${t}</span>`).join('')}
+        ${j.salary ? `<span class="badge" style="background:var(--go-dim);color:var(--gold);border:1px solid var(--go-b);">${j.salary}</span>` : ''}
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div class="match-bar-wrap" style="flex:1;margin-right:12px;">
+          <div class="match-bar-bg"><div class="match-bar-fill" style="width:${j.match}%"></div></div>
+          <span style="font-size:11px;font-weight:700;color:var(--accent);font-family:'Syne',sans-serif;min-width:32px;">${j.match}%</span>
+        </div>
+        <a class="apply-btn" href="${j.url}" target="_blank" onclick="event.stopPropagation()">Postuler ↗</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ══════════════════════════════════════════════════════════════
+// PWA — SERVICE WORKER & INSTALL
+// ══════════════════════════════════════════════════════════════
+let deferredPrompt = null;
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const banner = document.getElementById('pwa-banner');
+  if (banner && !localStorage.getItem('pwa-dismissed')) {
+    setTimeout(() => banner.classList.add('show'), 3000);
+  }
+});
+
+function installPWA() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => { deferredPrompt = null; dismissPWA(); });
+  }
+}
+
+function dismissPWA() {
+  document.getElementById('pwa-banner').classList.remove('show');
+  localStorage.setItem('pwa-dismissed', '1');
+}
+
+// ══════════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  buildMarquee();
+  buildFaq('main-faq');
+  initReveal();
+  // Counter animation
+  let c = 235;
+  const el = document.getElementById('hero-count');
+  const step = () => {
+    c = Math.min(c + 1, 247);
+    if (el) el.innerHTML = `<strong>${c}</strong> <span data-i18n="hero_count_txt">${LANGS[currentLang].hero_count_txt}</span>`;
+    if (c < 247) setTimeout(step, 80);
+  };
+  step();
+  // Detect browser language
+  const browserLang = (navigator.language || 'fr').slice(0, 2);
+  if (LANGS[browserLang] && browserLang !== 'fr') setLang(browserLang);
+});
+</script>
+</body>
+<!-- v4 -->
+</html>
