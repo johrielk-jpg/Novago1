@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Jetons repris des maquettes v1 (docs/maquettes-v1.html). */
+:root {
+  --ink: #221b22;
+  --paper: #f6f1ea;
+  --paper-2: #efe8dd;
+  --wine: #7c2340;
+  --brass: #b8935b;
+  --sage: #4c6b54;
+  --grey: #8b8189;
+  --line: #ddd4c7;
+  --white: #fffdf9;
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .card {
+    @apply rounded-card border border-line bg-white;
+  }
+
+  .tag {
+    @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-pill border border-line bg-white px-3 py-1.5 text-[12.5px] text-ink;
+  }
+
+  .tag-on {
+    @apply border-wine bg-wine text-white;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-pill px-5 py-3 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-primary {
+    @apply btn bg-wine text-white hover:bg-wine-dark;
+  }
+
+  .btn-ghost {
+    @apply btn border-[1.5px] border-ink bg-transparent text-ink hover:bg-paper-2;
+  }
+
+  .btn-brass {
+    @apply btn bg-brass text-white;
+  }
+
+  .field {
+    @apply w-full rounded-[10px] border border-line bg-white px-3.5 py-3 text-[13.5px] text-ink outline-none placeholder:text-grey focus:border-wine;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-xs text-grey;
+  }
+
+  .section-title {
+    @apply font-display text-base font-semibold;
+  }
+
+  .safety-note {
+    @apply rounded-[10px] bg-paper-2 px-3.5 py-3 text-[11.5px] leading-relaxed text-grey;
+  }
+}
+
+/* Bandeaux horizontaux type « En ligne maintenant » */
+.hscroll {
+  scrollbar-width: none;
+}
+.hscroll::-webkit-scrollbar {
+  display: none;
+}

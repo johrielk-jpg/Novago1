@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meet X — Maquettes produit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#221B22;
+    --paper:#F6F1EA;
+    --paper-2:#EFE8DD;
+    --wine:#7C2340;
+    --wine-dark:#5E1830;
+    --brass:#B8935B;
+    --sage:#4C6B54;
+    --grey:#8B8189;
+    --line:#DDD4C7;
+    --white:#FFFDF9;
+    --radius-card:14px;
+    --radius-pill:999px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#EAE3D6;
+    font-family:'IBM Plex Sans', sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  .studio{
+    max-width:1200px;
+    margin:0 auto;
+    padding:28px 16px 60px;
+  }
+  .studio-head{
+    margin-bottom:22px;
+  }
+  .studio-head .kicker{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:15px;
+    color:var(--wine);
+    margin:0 0 4px;
+  }
+  .studio-head h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:28px;
+    margin:0 0 6px;
+    letter-spacing:-0.01em;
+  }
+  .studio-head p{
+    margin:0;
+    color:var(--grey);
+    font-size:14px;
+    max-width:520px;
+    line-height:1.5;
+  }
+  .tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:22px 0 28px;
+  }
+  .tab{
+    border:1px solid var(--line);
+    background:var(--white);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:13px;
+    font-weight:500;
+    padding:9px 16px;
+    border-radius:var(--radius-pill);
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .tab:hover{ border-color:var(--brass); }
+  .tab.active{
+    background:var(--ink);
+    color:var(--paper);
+    border-color:var(--ink);
+  }
+  .stage{
+    display:flex;
+    justify-content:center;
+  }
+  .frame{ display:none; }
+  .frame.active{ display:block; }
+
+  /* ---- phone shell ---- */
+  .phone{
+    width:375px;
+    max-width:100%;
+    background:var(--paper);
+    border-radius:34px;
+    border:8px solid var(--ink);
+    overflow:hidden;
+    box-shadow:0 24px 50px rgba(34,27,34,0.22);
+  }
+  .status-bar{
+    height:30px;
+    background:var(--paper);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    font-size:11px;
+    font-weight:600;
+    color:var(--ink);
+  }
+  .screen{
+    height:700px;
+    overflow-y:auto;
+    background:var(--paper);
+    scrollbar-width:none;
+  }
+  .screen::-webkit-scrollbar{ display:none; }
+
+  /* ---- shared bits ---- */
+  .logo{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:20px;
+    letter-spacing:-0.01em;
+  }
+  .logo .x{ font-style:italic; color:var(--wine); }
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 20px 12px;
+  }
+  .avatar{
+    width:34px; height:34px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--wine), var(--brass));
+    color:var(--white);
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px; font-weight:600;
+  }
+  .tag{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius-pill);
+    padding:6px 12px;
+    font-size:12.5px;
+    color:var(--ink);
+    white-space:nowrap;
+  }
+  .tag.on{
+    background:var(--wine);
+    border-color:var(--wine);
+    color:var(--white);
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    border:none;
+    border-radius:var(--radius-pill);
+    padding:13px 20px;
+    font-family:'IBM Plex Sans', sans-serif;
+    font-weight:600;
+    font-size:14px;
+    cursor:pointer;
+  }
+  .btn-primary{ background:var(--wine); color:var(--white); }
+  .btn-ghost{ background:transparent; color:var(--ink); border:1.5px solid var(--ink); }
+  .btn-brass{ background:var(--brass); color:var(--white); }
+  .btn-block{ width:100%; }
+
+  .photo-block{
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--white);
+    font-family:'Fraunces', serif;
+    font-weight:500;
+  }
+
+  /* ===== SCREEN 1 — Accueil (sections de profils) ===== */
+  .home-header{ padding:16px 20px 4px; }
+  .home-header .top-row{ display:flex; align-items:center; justify-content:space-between; }
+  .home-header .signin{ font-size:12.5px; color:var(--ink); font-weight:600; cursor:pointer; }
+  .home-header .tagline{ font-size:12.5px; color:var(--grey); margin:10px 0 0; line-height:1.5; }
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    padding:20px 20px 10px;
+  }
+  .section-head h3{ font-family:'Fraunces', serif; font-size:16px; font-weight:600; margin:0; }
+  .section-head .see-all{ font-size:11.5px; color:var(--brass); font-weight:600; cursor:pointer; }
+  .hscroll{
+    display:flex; gap:12px; overflow-x:auto;
+    padding:2px 20px 6px; scroll-snap-type:x mandatory; scrollbar-width:none;
+  }
+  .hscroll::-webkit-scrollbar{ display:none; }
+  .mini-card{ flex:0 0 128px; position:relative; scroll-snap-align:start; }
+  .mini-photo{
+    width:128px; height:158px; border-radius:12px; position:relative;
+  }
+  .mini-fav{
+    position:absolute; top:8px; right:8px; width:27px; height:27px; border-radius:50%;
+    background:rgba(255,253,249,0.9); display:flex; align-items:center; justify-content:center;
+    font-size:13px; cursor:pointer; color:var(--ink); z-index:2;
+  }
+  .mini-fav.saved{ background:var(--wine); color:var(--white); }
+  .mini-badge{
+    position:absolute; left:8px; bottom:8px; z-index:2;
+    background:rgba(34,27,34,0.72); color:var(--white); font-size:10px; font-weight:600;
+    padding:4px 8px; border-radius:var(--radius-pill); display:flex; align-items:center; gap:4px;
+  }
+  .mini-badge.brass{ background:var(--brass); }
+  .mini-online-dot{
+    width:7px; height:7px; border-radius:50%; background:var(--sage);
+    border:1.5px solid var(--white); flex-shrink:0;
+  }
+  .mini-info{ padding-top:8px; }
+  .mini-name{ font-size:13px; font-weight:600; }
+  .mini-meta{ font-size:11px; color:var(--grey); margin-top:1px; }
+  .cta-band{
+    margin:22px 20px 6px; background:var(--ink); border-radius:var(--radius-card);
+    padding:18px; color:var(--paper);
+  }
+  .cta-band h4{ font-family:'Fraunces', serif; font-size:16px; margin:0 0 6px; font-weight:600; }
+  .cta-band p{ font-size:12.5px; color:#D8CFC3; margin:0 0 14px; line-height:1.5; }
+
+  /* ===== (legacy landing classes, unused elsewhere but kept for reference) ===== */
+  .landing{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:40px 26px 32px;
+    background:
+      radial-gradient(120% 70% at 50% 0%, #FBF7F1 0%, var(--paper) 55%);
+  }
+  .landing-top{ text-align:center; margin-top:30px; }
+  .landing-top .wordmark{
+    font-family:'Fraunces', serif;
+    font-size:42px;
+    font-weight:600;
+    letter-spacing:-0.02em;
+  }
+  .landing-top .wordmark .x{ font-style:italic; color:var(--wine); }
+  .landing-top .baseline{
+    margin-top:10px;
+    font-size:14px;
+    color:var(--grey);
+    line-height:1.5;
+  }
+  .principle-card{
+    margin-top:34px;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius-card);
+    padding:18px 18px;
+  }
+  .principle-card .row{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    padding:9px 0;
+  }
+  .principle-card .row + .row{ border-top:1px solid var(--line); }
+  .principle-card .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--wine);
+    margin-top:6px;
+    flex-shrink:0;
+  }
+  .principle-card p{
+    margin:0;
+    font-size:13px;
+    line-height:1.45;
+    color:var(--ink);
+  }
+  .landing-ctas{ display:flex; flex-direction:column; gap:10px; margin-top:30px; }
+  .landing-ctas .btn{ padding:15px; font-size:15px; }
+  .landing-ctas .sub{
+    text-align:center;
+    font-size:11.5px;
+    color:var(--grey);
+    margin-top:2px;
+  }
+
+  /* ===== SCREEN 2 — Recherche ===== */
+  .search-bar{
+    margin:6px 20px 14px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius-pill);
+    padding:11px 16px;
+    font-size:13.5px;
+    color:var(--grey);
+  }
+  .filter-row{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding:0 20px 6px;
+    scrollbar-width:none;
+  }
+  .filter-row::-webkit-scrollbar{ display:none; }
+  .filter-drawer{
+    margin:16px 20px 0;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius-card);
+    padding:18px;
+  }
+  .filter-drawer h3{
+    font-family:'Fraunces', serif;
+    font-size:16px;
+    margin:0 0 14px;
+    font-weight:600;
+  }
+  .field-label{
+    font-size:12px;
+    color:var(--grey);
+    margin:14px 0 8px;
+  }
+  .field-label:first-of-type{ margin-top:0; }
+  .range-track{
+    height:4px;
+    background:var(--line);
+    border-radius:2px;
+    position:relative;
+  }
+  .range-track .fill{
+    position:absolute;
+    left:20%; right:35%;
+    top:0; bottom:0;
+    background:var(--wine);
+    border-radius:2px;
+  }
+  .range-track .knob{
+    width:16px; height:16px;
+    border-radius:50%;
+    background:var(--wine);
+    border:3px solid var(--white);
+    box-shadow:0 1px 4px rgba(0,0,0,.25);
+    position:absolute;
+    top:50%; transform:translate(-50%,-50%);
+  }
+  .range-vals{
+    display:flex; justify-content:space-between;
+    font-size:11.5px; color:var(--grey); margin-top:8px;
+  }
+  .chip-grid{ display:flex; flex-wrap:wrap; gap:8px; }
+  .filter-actions{
+    display:flex; gap:10px; margin-top:20px;
+  }
+  .filter-actions .btn{ flex:1; padding:12px; font-size:13.5px; }
+
+  /* ===== SCREEN 3 — Résultats ===== */
+  .results-head{
+    padding:4px 20px 14px;
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+  }
+  .results-head h2{
+    font-family:'Fraunces', serif;
+    font-size:19px;
+    margin:0;
+    font-weight:600;
+  }
+  .results-head span{ font-size:12px; color:var(--grey); }
+  .sort-row{
+    display:flex; gap:8px; overflow-x:auto; padding:0 20px 14px; scrollbar-width:none;
+  }
+  .sort-row::-webkit-scrollbar{ display:none; }
+  .sort-chip{
+    flex-shrink:0; font-size:12.5px; font-weight:500; color:var(--ink);
+    background:var(--white); border:1px solid var(--line); border-radius:var(--radius-pill);
+    padding:7px 14px; cursor:pointer; white-space:nowrap;
+  }
+  .sort-chip.on{ background:var(--ink); border-color:var(--ink); color:var(--paper); }
+  .result-card{
+    margin:0 20px 14px;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius-card);
+    padding:12px;
+    display:flex;
+    gap:12px;
+  }
+  .result-card .photo-block{ width:76px; height:88px; font-size:22px; flex-shrink:0; }
+  .result-card .info{ flex:1; min-width:0; }
+  .result-card .name-row{
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .result-card .name-row .name{ font-weight:600; font-size:15px; }
+  .result-card .name-row .status{
+    width:8px; height:8px; border-radius:50%; background:var(--sage);
+  }
+  .result-card .meta{ font-size:12px; color:var(--grey); margin:2px 0 6px; }
+  .result-card .bio{
+    font-size:12.5px; color:var(--ink);
+    line-height:1.4;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .result-card .card-foot{
+    display:flex; align-items:center; justify-content:space-between; margin-top:8px;
+  }
+  .icon-btn{
+    width:32px; height:32px;
+    border-radius:50%;
+    border:1.5px solid var(--line);
+    background:var(--white);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    font-size:14px;
+  }
+  .icon-btn.saved{ background:var(--wine); border-color:var(--wine); color:var(--white); }
+
+  /* ===== SCREEN 4 — Fiche profil ===== */
+  .profile-hero{ position:relative; height:340px; }
+  .profile-hero .photo-block{ width:100%; height:100%; border-radius:0; font-size:64px; }
+  .profile-hero .back{
+    position:absolute; top:14px; left:14px;
+    width:32px; height:32px; border-radius:50%;
+    background:rgba(34,27,34,0.55);
+    color:var(--white);
+    display:flex; align-items:center; justify-content:center;
+    font-size:15px;
+  }
+  .profile-hero .dots{
+    position:absolute; bottom:12px; left:0; right:0;
+    display:flex; justify-content:center; gap:5px;
+  }
+  .profile-hero .dots span{
+    width:16px; height:3px; border-radius:2px; background:rgba(255,255,255,0.5);
+  }
+  .profile-hero .dots span.on{ background:var(--white); }
+  .profile-body{ padding:20px; }
+  .profile-body .name-line{
+    display:flex; align-items:center; gap:8px;
+  }
+  .profile-body .name-line h2{
+    font-family:'Fraunces', serif; font-size:23px; font-weight:600; margin:0;
+  }
+  .profile-body .verified{
+    font-size:10.5px; color:var(--sage); background:#E8EEE9;
+    padding:3px 8px; border-radius:var(--radius-pill); font-weight:600;
+  }
+  .profile-body .loc{ font-size:13px; color:var(--grey); margin:4px 0 16px; }
+  .profile-body .section-label{
+    font-size:12px; color:var(--grey); text-transform:none;
+    margin-bottom:8px;
+  }
+  .profile-body .bio-text{ font-size:14px; line-height:1.6; margin:0 0 18px; }
+  .interest-chip{
+    display:inline-block; background:var(--paper-2); border:1px solid var(--line);
+    border-radius:var(--radius-pill); padding:6px 13px; font-size:12.5px; margin:0 6px 6px 0;
+  }
+  .profile-cta-row{
+    display:flex; gap:10px; margin-top:20px;
+  }
+  .profile-cta-row .icon-btn{ width:48px; height:48px; font-size:18px; }
+  .profile-cta-row .btn{ flex:1; }
+  .safety-note{
+    margin-top:16px; padding:12px 14px; background:var(--paper-2);
+    border-radius:10px; font-size:11.5px; color:var(--grey); line-height:1.5;
+  }
+
+  /* ===== SCREEN 5 — Sélection + Messagerie ===== */
+  .seg{
+    display:flex; margin:6px 20px 16px; background:var(--paper-2);
+    border-radius:var(--radius-pill); padding:3px;
+  }
+  .seg button{
+    flex:1; border:none; background:transparent; padding:9px; border-radius:var(--radius-pill);
+    font-family:'IBM Plex Sans', sans-serif; font-size:12.5px; font-weight:600; color:var(--grey);
+    cursor:pointer;
+  }
+  .seg button.on{ background:var(--white); color:var(--ink); box-shadow:0 1px 3px rgba(0,0,0,0.08); }
+  .sel-row{
+    display:flex; align-items:center; gap:12px;
+    padding:12px 20px; border-bottom:1px solid var(--line);
+  }
+  .sel-row .photo-block{ width:48px; height:48px; border-radius:50%; font-size:14px; flex-shrink:0; }
+  .sel-row .info{ flex:1; min-width:0; }
+  .sel-row .info .top{ display:flex; justify-content:space-between; align-items:center; }
+  .sel-row .info .name{ font-weight:600; font-size:14px; }
+  .sel-row .info .time{ font-size:11px; color:var(--grey); }
+  .sel-row .info .preview{
+    font-size:12.5px; color:var(--grey); margin-top:2px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .pending-badge{
+    font-size:10.5px; font-weight:600; color:var(--brass);
+    background:#F6EEDF; padding:3px 9px; border-radius:var(--radius-pill);
+  }
+  .open-badge{
+    font-size:10.5px; font-weight:600; color:var(--sage);
+    background:#E8EEE9; padding:3px 9px; border-radius:var(--radius-pill);
+  }
+  .chat-view{ display:flex; flex-direction:column; height:100%; }
+  .chat-header{
+    display:flex; align-items:center; gap:10px; padding:14px 20px;
+    border-bottom:1px solid var(--line);
+  }
+  .chat-header .name{ font-weight:600; font-size:14.5px; }
+  .chat-header .sub{ font-size:11.5px; color:var(--sage); }
+  .chat-body{ flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:10px; }
+  .bubble{
+    max-width:75%; padding:10px 14px; border-radius:16px; font-size:13.5px; line-height:1.4;
+  }
+  .bubble.them{ background:var(--white); border:1px solid var(--line); align-self:flex-start; border-bottom-left-radius:4px; }
+  .bubble.me{ background:var(--wine); color:var(--white); align-self:flex-end; border-bottom-right-radius:4px; }
+  .chat-input{
+    display:flex; gap:8px; padding:12px 16px; border-top:1px solid var(--line);
+  }
+  .chat-input .field{
+    flex:1; background:var(--paper-2); border-radius:var(--radius-pill);
+    padding:11px 16px; font-size:13px; color:var(--grey);
+  }
+  .chat-input .send{
+    width:38px; height:38px; border-radius:50%; background:var(--wine); color:var(--white);
+    display:flex; align-items:center; justify-content:center; font-size:14px;
+  }
+
+  /* ===== SCREEN 6 — Dashboard femme ===== */
+  .dash-card{
+    margin:0 20px 16px; background:var(--white); border:1px solid var(--line);
+    border-radius:var(--radius-card); padding:16px;
+  }
+  .dash-card h3{
+    font-family:'Fraunces', serif; font-size:15.5px; margin:0 0 4px; font-weight:600;
+  }
+  .dash-card .desc{ font-size:12px; color:var(--grey); line-height:1.45; margin:0 0 12px; }
+  .toggle-row{
+    display:flex; align-items:center; justify-content:space-between; padding:9px 0;
+  }
+  .toggle-row + .toggle-row{ border-top:1px solid var(--line); }
+  .toggle-row .label{ font-size:13.5px; }
+  .toggle-row .hint{ font-size:11px; color:var(--grey); margin-top:1px; }
+  .switch{
+    width:38px; height:22px; border-radius:var(--radius-pill); position:relative; flex-shrink:0;
+  }
+  .switch.on{ background:var(--wine); }
+  .switch.off{ background:var(--line); }
+  .switch::after{
+    content:''; position:absolute; top:3px; width:16px; height:16px; border-radius:50%; background:var(--white);
+  }
+  .switch.on::after{ right:3px; }
+  .switch.off::after{ left:3px; }
+  .signal-row{
+    display:flex; align-items:center; gap:12px; padding:12px 0;
+  }
+  .signal-row + .signal-row{ border-top:1px solid var(--line); }
+  .signal-row .photo-block{ width:44px; height:44px; border-radius:50%; font-size:13px; flex-shrink:0; }
+  .signal-row .info{ flex:1; }
+  .signal-row .info .name{ font-size:13.5px; font-weight:600; }
+  .signal-row .info .meta{ font-size:11.5px; color:var(--grey); }
+  .signal-actions{ display:flex; gap:6px; }
+  .signal-actions button{
+    width:30px; height:30px; border-radius:50%; border:none; font-size:13px; cursor:pointer;
+  }
+  .signal-actions .accept{ background:var(--sage); color:var(--white); }
+  .signal-actions .decline{ background:var(--paper-2); color:var(--grey); }
+
+  /* ===== SCREEN 7-10 — Inscription / Vérification / Profil / Compte ===== */
+  .stepper{ display:flex; gap:6px; padding:18px 20px 6px; }
+  .stepper .step{ flex:1; height:4px; border-radius:2px; background:var(--line); }
+  .stepper .step.done{ background:var(--wine); }
+  .step-label{ padding:2px 20px 14px; font-size:11.5px; color:var(--grey); }
+
+  .form-group{ padding:0 20px; }
+  .form-label{ font-size:12px; color:var(--grey); margin:0 0 6px; }
+  .form-input{
+    background:var(--white); border:1px solid var(--line); border-radius:10px;
+    padding:13px 14px; font-size:13.5px; color:var(--ink); margin-bottom:14px;
+  }
+  .form-input.ph{ color:var(--grey); }
+
+  .role-seg{ display:flex; gap:10px; padding:0 20px 16px; }
+  .role-card{
+    flex:1; border:1.5px solid var(--line); border-radius:12px; padding:16px 12px;
+    text-align:center; background:var(--white);
+  }
+  .role-card.on{ border-color:var(--wine); background:#FBF3F5; }
+  .role-card .ico{ font-size:20px; margin-bottom:6px; }
+  .role-card .t{ font-size:13px; font-weight:600; }
+
+  .upload-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding:2px 20px 6px; }
+  .upload-tile{
+    aspect-ratio:3/4; border-radius:10px; border:1.5px dashed var(--line);
+    display:flex; align-items:center; justify-content:center; font-size:18px; color:var(--grey);
+    background:var(--white);
+  }
+  .upload-tile.filled{ border-style:solid; color:var(--white); font-family:'Fraunces', serif; font-weight:500; font-size:20px; }
+
+  .textarea-mock{
+    background:var(--white); border:1px solid var(--line); border-radius:10px;
+    padding:13px 14px; font-size:13px; line-height:1.55; color:var(--ink); min-height:78px;
+    margin:0 20px 4px;
+  }
+
+  .verify-hero{ text-align:center; padding:34px 30px 6px; }
+  .verify-hero .verify-icon{
+    width:62px; height:62px; border-radius:50%; background:var(--paper-2);
+    display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto 16px;
+  }
+  .verify-hero h2{ font-family:'Fraunces', serif; font-size:19px; margin:0 0 8px; font-weight:600; }
+  .verify-hero p{ font-size:13px; color:var(--grey); line-height:1.55; margin:0; }
+  .verify-option{
+    margin:14px 20px 0; border:1.5px solid var(--line); border-radius:12px;
+    padding:14px 16px; display:flex; align-items:center; gap:12px; background:var(--white);
+  }
+  .verify-option .ico{ width:38px; height:38px; border-radius:10px; background:var(--paper-2); display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+  .verify-option .t{ font-size:13.5px; font-weight:600; }
+  .verify-option .s{ font-size:11.5px; color:var(--grey); margin-top:1px; }
+
+  .settings-group-label{ padding:20px 20px 6px; font-size:11.5px; color:var(--grey); }
+  .settings-row{
+    display:flex; align-items:center; gap:12px; padding:13px 20px;
+    border-bottom:1px solid var(--line);
+  }
+  .settings-row .ico{
+    width:32px; height:32px; border-radius:9px; background:var(--paper-2);
+    display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0;
+  }
+  .settings-row .label{ flex:1; font-size:13.5px; font-weight:500; }
+  .settings-row .chev{ color:var(--grey); font-size:13px; }
+  .settings-row.danger .label{ color:var(--wine); }
+  .settings-row.danger .ico{ background:#FBF3F5; }
+
+  .footnote{
+    text-align:center; font-size:11.5px; color:var(--grey); margin-top:26px; line-height:1.6;
+  }
+  @media (max-width:420px){
+    .studio{ padding:20px 10px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="studio">
+  <div class="studio-head">
+    <p class="kicker">Meet&nbsp;<i>X</i> — dossier produit</p>
+    <h1>Maquettes d'écrans, v1</h1>
+    <p>Répertoire de recherche, pas un jeu de swipe. L'homme filtre et recherche, la femme garde la main sur qui elle laisse entrer en conversation.</p>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-frame="f1">1 · Accueil</button>
+    <button class="tab" data-frame="f7">2 · Inscription</button>
+    <button class="tab" data-frame="f2">3 · Recherche & filtres</button>
+    <button class="tab" data-frame="f3">4 · Résultats</button>
+    <button class="tab" data-frame="f4">5 · Fiche profil</button>
+    <button class="tab" data-frame="f5">6 · Sélection & messages</button>
+    <button class="tab" data-frame="f8">7 · Vérification d'identité</button>
+    <button class="tab" data-frame="f9">8 · Créer mon profil</button>
+    <button class="tab" data-frame="f6">9 · Dashboard femme</button>
+    <button class="tab" data-frame="f10">10 · Compte & paramètres</button>
+  </div>
+
+  <div class="stage">
+
+    <!-- ===================== FRAME 1 — LANDING ===================== -->
+    <div class="frame active" id="f1">
+      <div class="phone">
+        <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+        <div class="screen">
+          <div class="home-header">
+            <div class="top-row">
+              <div class="logo">Meet<span class="x">&nbsp;X</span></div>
+              <span class="signin">Se connecter</span>
+            </div>
+            <p class="tagline">Un répertoire de profils, pas une file à swiper. Recherchez, filtrez, choisissez qui contacter.</p>
+          </div>
+          <div class="search-bar" style="margin-top:2px;">🔍&nbsp; Prénom, ville, centre d'intérêt…</div>
+
+          <div class="section-head"><h3>En ligne maintenant</h3><span class="see-all">Voir tout</span></div>
+          <div class="hscroll">
+            <div class="mini-card">
+              <div class="mini-photo photo-block" style="background:linear-gradient(150deg,#7C2340,#B8935B);">C.</div>
+              <div class="mini-fav">♡</div>
+              <div class="mini-badge"><span class="mini-online-dot"></span>En ligne</div>
+              <div class="mini-info"><div class="mini-name">Camille, 29</div><div class="mini-meta">Paris 11e · 3,4 km</div></div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-photo photo-block" style="background:linear-gradient(150deg,#4C6B54,#B8935B);">L.</div>
+              <div class="mini-fav saved">♥</div>
+              <div class="mini-badge"><span class="mini-online-dot"></span>En ligne</div>
+              <div class="mini-info"><div class="mini-name">Léa, 27</div><div class="mini-meta">Boulogne · 6,1 km</div></div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-photo photo-block" style="background:linear-gradient(150deg,#B8935B,#221B22);">M.</div>
+              <div class="mini-fav">♡</div>
+              <div class="mini-badge"><span class="mini-online-dot"></span>En ligne</div>
+              <div class="mini-info"><div class="mini-name">Manon, 28</div><div class="mini-meta">Paris 20e · 4,7 km</div></div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-photo photo-block" style="background:linear-gradient(150deg,#7C2340,#4C6B54);">J.</div>
+              <div class="mini-fav">♡</div>
+              <div class="mini-badge"><span class="mini-online-dot"></span>En ligne</div>
+              <div class="mini-info"><div class="mini-name">Julie, 30</div><div class="mini-meta">Montreuil · 7,2 km</div></div>
+            </div>
+          </div>
+
+          <div class="section-head"><h3>Proche de chez vous</h3><span class="see-all">Voir tout</span></div>
+          <div class="hscroll">
+            <div class="mini-card">
+              <div class="mini-photo photo-block" style="background:linear-gradient(150deg,#221B22,#7C2340);">S.</div>
+              <div class="mini-fav">♡</div>
+              <div class="mini-badge">📍 1,8 km</div>
+              <div class="mini-info"><div class="mini-name">Sarah, 31</div><div class="mini-meta">Paris 4e</div></div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-photo photo-block" style="background:linear-gradient(150deg,#B8935B,#7C2340);">E.</div>
+              <div class="mini-fav">♡</div>
+              <div class="mini-badge">📍 2,3 km</div>
+              <div class="mini-info"><div class="mini-name">Emma, 26</div><div class="mini-meta">Paris 3e</div></div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-photo photo-block" style="background:linear-gradient(150deg,#4C6B54,#221B22);">P.</div>
+              <div class="mini-fav">♡</div>
+              <div class="mini-badge">📍 2,9 km</div>
+              <div class="mini-info"><div class="mini-name">Pauline, 33</div><div class="mini-meta">Paris 11e</div></div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-photo photo-block" style="background:linear-gradient(150deg,#7C2340,#B8935B);">N.</div>
+              <div class="mini-fav">♡</div>
+              <div class="mini-badge">📍 3,5 km</div>
+              <div class="mini-info"><div class="mini-name">Nina, 28</div><div class="mini-meta">Paris 12e</div></div>
+            </div>
+          </div>
+
+          <div class="section-head"><h3>Les plus appréciées</h3><span class="see-all">Voir tout</span></div>
+          <div class="hscroll">
+            <div class="mini-card">
+              <div class="mini-photo photo-block" style="background:linear-gradient(150deg,#B8935B,#4C6B54);">A.</div>
+              <div class="mini-fav">♡</div>
+              <div class="mini-badge brass">98% d'accords</div>
+              <div class="mini-info"><div class="mini-name">Alice, 29</div><div class="mini-meta">Paris 6e · 5,0 km</div></div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-photo photo-block" style="background:linear-gradient(150deg,#221B22,#B8935B);">O.</div>
+              <div class="mini-fav">♡</div>
+              <div class="mini-badge brass">96% d'accords</div>
+              <div class="mini-info"><div class="mini-name">Olivia, 31</div><div class="mini-meta">Paris 17e · 8,4 km</div></div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-photo photo-block" style="background:linear-gradient(150deg,#7C2340,#221B22);">R.</div>
+              <div class="mini-fav">♡</div>
+              <div class="mini-badge brass">95% d'accords</div>
+              <div class="mini-info"><div class="mini-name">Romane, 27</div><div class="mini-meta">Vincennes · 8,9 km</div></div>
+            </div>
+          </div>
+
+          <div class="section-head"><h3>Nouvelles inscrites</h3><span class="see-all">Voir tout</span></div>
+          <div class="hscroll">
+            <div class="mini-card">
+              <div class="mini-photo photo-block" style="background:linear-gradient(150deg,#4C6B54,#7C2340);">V.</div>
+              <div class="mini-fav">♡</div>
+              <div class="mini-badge brass">Nouveau</div>
+              <div class="mini-info"><div class="mini-name">Valentine, 25</div><div class="mini-meta">Paris 10e · 4,1 km</div></div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-photo photo-block" style="background:linear-gradient(150deg,#B8935B,#221B22);">H.</div>
+              <div class="mini-fav">♡</div>
+              <div class="mini-badge brass">Nouveau</div>
+              <div class="mini-info"><div class="mini-name">Hélène, 32</div><div class="mini-meta">Ivry · 9,6 km</div></div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-photo photo-block" style="background:linear-gradient(150deg,#7C2340,#4C6B54);">D.</div>
+              <div class="mini-fav">♡</div>
+              <div class="mini-badge brass">Nouveau</div>
+              <div class="mini-info"><div class="mini-name">Diane, 28</div><div class="mini-meta">Paris 19e · 6,0 km</div></div>
+            </div>
+          </div>
+
+          <div class="cta-band">
+            <h4>Voir les 128 profils complets</h4>
+            <p>Créez un compte pour filtrer par ville, âge et centres d'intérêt, et envoyer un signe.</p>
+            <button class="btn btn-primary btn-block">Créer mon compte</button>
+          </div>
+          <div style="height:20px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== FRAME 2 — RECHERCHE ===================== -->
+    <div class="frame" id="f2">
+      <div class="phone">
+        <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+        <div class="screen">
+          <div class="topbar">
+            <div class="logo">Meet<span class="x">&nbsp;X</span></div>
+            <div class="avatar">TM</div>
+          </div>
+          <div class="search-bar">🔍&nbsp; Prénom, ville, centre d'intérêt…</div>
+          <div class="filter-row">
+            <span class="tag on">📍 Paris + 20 km</span>
+            <span class="tag on">26–34 ans</span>
+            <span class="tag">Vérifiées</span>
+          </div>
+
+          <div class="filter-drawer">
+            <h3>Affiner la recherche</h3>
+
+            <p class="field-label">Lieu</p>
+            <div class="form-input" style="margin-bottom:8px;">📍 Paris</div>
+            <div class="range-track">
+              <div class="fill" style="left:0;right:60%;"></div>
+              <div class="knob" style="left:40%;"></div>
+            </div>
+            <div class="range-vals"><span>Rayon</span><span>20 km</span></div>
+
+            <p class="field-label" style="margin-top:18px;">Âge — 26 à 34 ans</p>
+            <div class="range-track">
+              <div class="fill"></div>
+              <div class="knob" style="left:20%;"></div>
+              <div class="knob" style="left:65%;"></div>
+            </div>
+
+            <p class="field-label">Taille — 160 à 178 cm</p>
+            <div class="range-track">
+              <div class="fill" style="left:15%;right:20%;"></div>
+              <div class="knob" style="left:15%;"></div>
+              <div class="knob" style="left:80%;"></div>
+            </div>
+
+            <div class="toggle-row" style="padding:16px 0 4px; border-top:1px solid var(--line); margin-top:16px;">
+              <div><div class="label">Profil vérifié uniquement</div><div class="hint">Identité confirmée par Meet X</div></div>
+              <div class="switch on"></div>
+            </div>
+
+            <p class="field-label" style="margin-top:14px;">Langues parlées</p>
+            <div class="chip-grid">
+              <span class="tag on">Français</span>
+              <span class="tag on">Anglais</span>
+              <span class="tag">Espagnol</span>
+              <span class="tag">Italien</span>
+              <span class="tag">Arabe</span>
+              <span class="tag">+ 12 autres</span>
+            </div>
+
+            <p class="field-label">Nationalité</p>
+            <div class="chip-grid">
+              <span class="tag on">Toutes</span>
+              <span class="tag">Française</span>
+              <span class="tag">Belge</span>
+              <span class="tag">Suisse</span>
+              <span class="tag">+ Ajouter</span>
+            </div>
+
+            <div class="filter-actions">
+              <button class="btn btn-ghost">Réinitialiser</button>
+              <button class="btn btn-primary">Voir 128 profils</button>
+            </div>
+          </div>
+          <div class="safety-note" style="margin:14px 20px 0;">Le filtre de nationalité reste sur « Toutes » par défaut : il n'écarte des profils que si vous le modifiez explicitement, pour rester conforme au cadre légal anti-discrimination.</div>
+          <div style="height:24px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== FRAME 3 — RÉSULTATS ===================== -->
+    <div class="frame" id="f3">
+      <div class="phone">
+        <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+        <div class="screen">
+          <div class="topbar">
+            <div class="logo">Meet<span class="x">&nbsp;X</span></div>
+            <div class="avatar">TM</div>
+          </div>
+          <div class="filter-row">
+            <span class="tag on">📍 Paris +20km ✕</span>
+            <span class="tag on">26–34 ans ✕</span>
+            <span class="tag">+ Ajouter un filtre</span>
+          </div>
+          <div class="results-head">
+            <h2>128 profils</h2>
+          </div>
+          <div class="sort-row">
+            <span class="sort-chip on" data-sort="distance">Distance</span>
+            <span class="sort-chip" data-sort="recent">Dernière connexion</span>
+            <span class="sort-chip" data-sort="rated">Les mieux notées</span>
+          </div>
+
+          <div class="result-card">
+            <div class="photo-block" style="background:linear-gradient(135deg,#7C2340,#B8935B);">C.</div>
+            <div class="info">
+              <div class="name-row"><span class="name">Camille, 29</span><span class="status"></span></div>
+              <div class="meta">Paris 11e · à 3,4 km</div>
+              <div class="bio">Architecte d'intérieur, passionnée de voile et de cuisine italienne. Cherche quelqu'un de curieux.</div>
+              <div class="card-foot">
+                <span class="interest-chip" style="margin:0;">Voyage</span>
+                <div class="icon-btn saved">♥</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-card">
+            <div class="photo-block" style="background:linear-gradient(135deg,#4C6B54,#B8935B);">L.</div>
+            <div class="info">
+              <div class="name-row"><span class="name">Léa, 27</span><span class="status" style="background:var(--line);"></span></div>
+              <div class="meta">Boulogne-Billancourt · à 6,1 km</div>
+              <div class="bio">Kinésithérapeute. Trail le dimanche, série le lundi. Pas très portable, plutôt franche.</div>
+              <div class="card-foot">
+                <span class="interest-chip" style="margin:0;">Sport</span>
+                <div class="icon-btn">♡</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-card">
+            <div class="photo-block" style="background:linear-gradient(135deg,#7C2340,#4C6B54);">S.</div>
+            <div class="info">
+              <div class="name-row"><span class="name">Sarah, 31</span><span class="status"></span></div>
+              <div class="meta">Vincennes · à 8,9 km</div>
+              <div class="bio">Cheffe de projet dans l'événementiel. Amatrice de cinéma d'auteur et de brunchs interminables.</div>
+              <div class="card-foot">
+                <span class="interest-chip" style="margin:0;">Cinéma</span>
+                <div class="icon-btn">♡</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-card">
+            <div class="photo-block" style="background:linear-gradient(135deg,#B8935B,#221B22);">M.</div>
+            <div class="info">
+              <div class="name-row"><span class="name">Manon, 28</span><span class="status" style="background:var(--line);"></span></div>
+              <div class="meta">Paris 20e · à 4,7 km</div>
+              <div class="bio">Illustratrice freelance. Grande lectrice, petite dormeuse. Toujours partante pour une expo.</div>
+              <div class="card-foot">
+                <span class="interest-chip" style="margin:0;">Lecture</span>
+                <div class="icon-btn">♡</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== FRAME 4 — FICHE PROFIL ===================== -->
+    <div class="frame" id="f4">
+      <div class="phone">
+        <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+        <div class="screen">
+          <div class="profile-hero">
+            <div class="photo-block" style="background:linear-gradient(160deg,#7C2340,#B8935B,#221B22);">C.</div>
+            <div class="back">←</div>
+            <div class="dots"><span class="on"></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="profile-body">
+            <div class="name-line">
+              <h2>Camille, 29</h2>
+              <span class="verified">✓ Vérifiée</span>
+            </div>
+            <p class="loc">Architecte d'intérieur · Paris 11e · à 3,4 km</p>
+
+            <p class="section-label">À propos</p>
+            <p class="bio-text">Architecte d'intérieur le jour, équipière de voile le week-end. Je cherche quelqu'un avec qui parler d'un bon film autant que d'un mauvais plat raté ensemble.</p>
+
+            <p class="section-label">Centres d'intérêt</p>
+            <div>
+              <span class="interest-chip">Voyage</span>
+              <span class="interest-chip">Voile</span>
+              <span class="interest-chip">Cuisine italienne</span>
+              <span class="interest-chip">Architecture</span>
+            </div>
+
+            <div class="profile-cta-row">
+              <div class="icon-btn">✕</div>
+              <button class="btn btn-primary">Envoyer un signe</button>
+              <div class="icon-btn saved">♥</div>
+            </div>
+
+            <div class="safety-note">Un « signe » prévient Camille de votre intérêt. La conversation ne s'ouvre que si elle décide d'y répondre.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== FRAME 5 — SÉLECTION / MESSAGES ===================== -->
+    <div class="frame" id="f5">
+      <div class="phone">
+        <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+        <div class="screen">
+          <div class="topbar">
+            <div class="logo">Meet<span class="x">&nbsp;X</span></div>
+            <div class="avatar">TM</div>
+          </div>
+          <div class="seg">
+            <button class="seg-btn on" data-pane="pane-selection">Ma sélection</button>
+            <button class="seg-btn" data-pane="pane-messages">Messages</button>
+          </div>
+
+          <div id="pane-selection">
+            <div class="sel-row">
+              <div class="photo-block" style="background:linear-gradient(135deg,#4C6B54,#B8935B);">S.</div>
+              <div class="info">
+                <div class="top"><span class="name">Sarah, 31</span><span class="open-badge">Conversation ouverte</span></div>
+                <div class="preview">« Le brunch de Vincennes ce week-end, ça vous dit ? »</div>
+              </div>
+            </div>
+
+            <div class="sel-row">
+              <div class="photo-block" style="background:linear-gradient(135deg,#7C2340,#B8935B);">C.</div>
+              <div class="info">
+                <div class="top"><span class="name">Camille, 29</span><span class="pending-badge">Signe envoyé</span></div>
+                <div class="preview">En attente de réponse — envoyé hier</div>
+              </div>
+            </div>
+
+            <div class="sel-row">
+              <div class="photo-block" style="background:linear-gradient(135deg,#B8935B,#221B22);">M.</div>
+              <div class="info">
+                <div class="top"><span class="name">Manon, 28</span><span class="pending-badge">Signe envoyé</span></div>
+                <div class="preview">En attente de réponse — envoyé il y a 3 jours</div>
+              </div>
+            </div>
+
+            <p class="footnote">Les profils sans réponse après 14 jours quittent<br>automatiquement votre sélection.</p>
+          </div>
+
+          <div id="pane-messages" style="display:none;">
+            <div class="chat-view" style="height:600px;">
+              <div class="chat-header">
+                <div class="photo-block" style="width:36px;height:36px;border-radius:50%;font-size:12px;background:linear-gradient(135deg,#4C6B54,#B8935B);">S.</div>
+                <div>
+                  <div class="name">Sarah, 31</div>
+                  <div class="sub">En ligne maintenant</div>
+                </div>
+              </div>
+              <div class="chat-body">
+                <div class="bubble them">Bonjour Thomas, merci pour votre signe 🙂 j'ai vu que vous aimiez aussi le cinéma d'auteur.</div>
+                <div class="bubble me">Avec plaisir ! Vous avez vu le dernier Justine Triet ?</div>
+                <div class="bubble them">Pas encore, mais il est sur ma liste. Vous êtes plutôt salle obscure ou plutôt terrasse ?</div>
+                <div class="bubble me">Les deux, mais un brunch d'abord pour se jauger, non ?</div>
+                <div class="bubble them">« Le brunch de Vincennes ce week-end, ça vous dit ? »</div>
+              </div>
+              <div class="chat-input">
+                <div class="field">Écrire un message…</div>
+                <div class="send">➤</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== FRAME 5b (shown as part of tab 5) — CHAT ===================== -->
+
+    <!-- ===================== FRAME 6 — DASHBOARD FEMME ===================== -->
+    <div class="frame" id="f6">
+      <div class="phone">
+        <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+        <div class="screen">
+          <div class="topbar">
+            <div class="logo">Meet<span class="x">&nbsp;X</span></div>
+            <div class="avatar" style="background:linear-gradient(135deg,#4C6B54,#B8935B);">SM</div>
+          </div>
+
+          <div class="dash-card">
+            <h3>Visibilité</h3>
+            <p class="desc">Décidez qui peut vous trouver dans les résultats de recherche.</p>
+            <div class="toggle-row">
+              <div><div class="label">Profil visible</div><div class="hint">Apparaît dans les recherches</div></div>
+              <div class="switch on"></div>
+            </div>
+            <div class="toggle-row">
+              <div><div class="label">Réservé aux profils vérifiés</div><div class="hint">Filtre les comptes non confirmés</div></div>
+              <div class="switch on"></div>
+            </div>
+            <div class="toggle-row">
+              <div><div class="label">Distance maximale</div><div class="hint">Visible jusqu'à 25 km</div></div>
+              <div class="switch off"></div>
+            </div>
+          </div>
+
+          <div class="dash-card">
+            <h3>Signes reçus · 3</h3>
+            <p class="desc">Personne ne vous écrit sans votre accord. Acceptez pour ouvrir la conversation.</p>
+
+            <div class="signal-row">
+              <div class="photo-block" style="background:linear-gradient(135deg,#221B22,#7C2340);">T.</div>
+              <div class="info">
+                <div class="name">Thomas, 32</div>
+                <div class="meta">Paris 15e · Ingénieur · à 5 km</div>
+              </div>
+              <div class="signal-actions">
+                <button class="decline">✕</button>
+                <button class="accept">✓</button>
+              </div>
+            </div>
+
+            <div class="signal-row">
+              <div class="photo-block" style="background:linear-gradient(135deg,#B8935B,#4C6B54);">A.</div>
+              <div class="info">
+                <div class="name">Antoine, 30</div>
+                <div class="meta">Montreuil · Product Manager · à 9 km</div>
+              </div>
+              <div class="signal-actions">
+                <button class="decline">✕</button>
+                <button class="accept">✓</button>
+              </div>
+            </div>
+
+            <div class="signal-row">
+              <div class="photo-block" style="background:linear-gradient(135deg,#7C2340,#221B22);">N.</div>
+              <div class="info">
+                <div class="name">Nicolas, 34</div>
+                <div class="meta">Paris 9e · Architecte · à 3 km</div>
+              </div>
+              <div class="signal-actions">
+                <button class="decline">✕</button>
+                <button class="accept">✓</button>
+              </div>
+            </div>
+          </div>
+
+          <p class="footnote">Refuser un signe est silencieux : aucune<br>notification n'est envoyée à l'expéditeur.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== FRAME 7 — INSCRIPTION ===================== -->
+    <div class="frame" id="f7">
+      <div class="phone">
+        <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+        <div class="screen">
+          <div class="topbar" style="padding-bottom:0;">
+            <div class="logo">Meet<span class="x">&nbsp;X</span></div>
+            <span style="font-size:12.5px;color:var(--grey);">Étape 1 / 3</span>
+          </div>
+          <div class="stepper">
+            <div class="step done"></div><div class="step"></div><div class="step"></div>
+          </div>
+          <p class="step-label">Créez votre compte pour commencer.</p>
+
+          <div class="role-seg">
+            <div class="role-card on"><div class="ico">🔎</div><div class="t">Je recherche</div></div>
+            <div class="role-card"><div class="ico">✦</div><div class="t">Je m'inscris</div></div>
+          </div>
+
+          <div class="form-group">
+            <p class="form-label">Prénom</p>
+            <div class="form-input">Thomas</div>
+            <p class="form-label">Date de naissance</p>
+            <div class="form-input">14 / 03 / 1994</div>
+            <p class="form-label">Ville</p>
+            <div class="form-input">Paris</div>
+            <p class="form-label">E-mail</p>
+            <div class="form-input ph">vous@exemple.com</div>
+            <p class="form-label">Mot de passe</p>
+            <div class="form-input ph">8 caractères minimum</div>
+          </div>
+
+          <div style="padding:6px 20px 0;">
+            <button class="btn btn-primary btn-block">Continuer</button>
+            <p class="footnote" style="margin-top:14px;">En continuant, vous acceptez les CGU et la Politique de confidentialité de Meet X.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== FRAME 8 — VÉRIFICATION D'IDENTITÉ ===================== -->
+    <div class="frame" id="f8">
+      <div class="phone">
+        <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+        <div class="screen">
+          <div class="topbar" style="padding-bottom:0;">
+            <span style="font-size:16px;">←</span>
+            <span style="font-size:12.5px;color:var(--grey);">Étape 3 / 3</span>
+          </div>
+          <div class="verify-hero">
+            <div class="verify-icon">🛡️</div>
+            <h2>Vérifiez votre identité</h2>
+            <p>Un profil vérifié inspire confiance et reçoit en moyenne 3 fois plus de réponses. C'est aussi ce qui garde Meet X sûr pour tout le monde.</p>
+          </div>
+
+          <div class="verify-option">
+            <div class="ico">🤳</div>
+            <div style="flex:1;"><div class="t">Selfie de vérification</div><div class="s">Comparé automatiquement à vos photos de profil</div></div>
+            <span class="chev">›</span>
+          </div>
+          <div class="verify-option">
+            <div class="ico">🪪</div>
+            <div style="flex:1;"><div class="t">Pièce d'identité</div><div class="s">Recommandé — badge « Vérifiée » sur votre profil</div></div>
+            <span class="chev">›</span>
+          </div>
+
+          <div class="safety-note" style="margin:20px 20px 0;">Vos documents servent uniquement à la vérification. Ils ne sont jamais visibles par les autres membres et sont supprimés après contrôle.</div>
+
+          <div style="padding:20px 20px 0;">
+            <button class="btn btn-primary btn-block">Commencer la vérification</button>
+            <p class="footnote" style="margin-top:12px;">Plus tard — mon profil restera visible avec une portée réduite</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== FRAME 9 — CRÉER MON PROFIL (femme) ===================== -->
+    <div class="frame" id="f9">
+      <div class="phone">
+        <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+        <div class="screen">
+          <div class="topbar" style="padding-bottom:0;">
+            <div class="logo">Meet<span class="x">&nbsp;X</span></div>
+            <span style="font-size:12.5px;color:var(--grey);">Aperçu</span>
+          </div>
+          <p class="step-label">Ajoutez au moins 3 photos. La première est celle vue en premier.</p>
+
+          <div class="upload-grid">
+            <div class="upload-tile filled" style="background:linear-gradient(150deg,#7C2340,#B8935B);">S.</div>
+            <div class="upload-tile filled" style="background:linear-gradient(150deg,#4C6B54,#B8935B);">+</div>
+            <div class="upload-tile">＋</div>
+            <div class="upload-tile">＋</div>
+            <div class="upload-tile">＋</div>
+            <div class="upload-tile">＋</div>
+          </div>
+
+          <div class="form-group" style="margin-top:14px;">
+            <p class="form-label">À propos de vous</p>
+          </div>
+          <div class="textarea-mock">Kinésithérapeute passionnée de trail et de séries scandinaves. À la recherche de conversations qui durent plus qu'un match.</div>
+
+          <div class="form-group" style="margin-top:14px;">
+            <p class="form-label">Ville</p>
+            <div class="form-input">Boulogne-Billancourt</div>
+            <p class="form-label">Taille</p>
+            <div class="form-input">168 cm</div>
+            <p class="form-label">Langues parlées</p>
+            <div class="chip-grid" style="margin-bottom:14px;">
+              <span class="tag on">Français</span>
+              <span class="tag on">Anglais</span>
+              <span class="tag">+ Ajouter</span>
+            </div>
+            <p class="form-label">Nationalité <span style="color:var(--grey);font-weight:400;">(optionnel)</span></p>
+            <div class="form-input ph">Non renseignée</div>
+          </div>
+
+          <div class="toggle-row" style="margin:0 20px; border-top:1px solid var(--line); padding-top:14px;">
+            <div><div class="label">Afficher ma nationalité</div><div class="hint">Désactivé par défaut, visible seulement si vous l'activez</div></div>
+            <div class="switch off"></div>
+          </div>
+
+          <div class="form-group" style="margin-top:14px;">
+            <p class="form-label">Centres d'intérêt</p>
+            <div class="chip-grid" style="margin-bottom:6px;">
+              <span class="tag on">Sport</span>
+              <span class="tag on">Séries</span>
+              <span class="tag">Cuisine</span>
+              <span class="tag">Voyage</span>
+              <span class="tag">Musique</span>
+            </div>
+          </div>
+
+          <div style="padding:20px;">
+            <button class="btn btn-primary btn-block">Publier mon profil</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== FRAME 6 wrapper closes above; FRAME 10 — COMPTE & PARAMÈTRES ===================== -->
+    <div class="frame" id="f10">
+      <div class="phone">
+        <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+        <div class="screen">
+          <div class="topbar">
+            <div class="logo">Meet<span class="x">&nbsp;X</span></div>
+            <div class="avatar">TM</div>
+          </div>
+
+          <p class="settings-group-label">Compte</p>
+          <div class="settings-row"><div class="ico">👤</div><div class="label">Informations personnelles</div><span class="chev">›</span></div>
+          <div class="settings-row"><div class="ico">🔒</div><div class="label">Confidentialité & visibilité</div><span class="chev">›</span></div>
+          <div class="settings-row"><div class="ico">🔔</div><div class="label">Notifications</div><span class="chev">›</span></div>
+
+          <p class="settings-group-label">Sécurité</p>
+          <div class="settings-row"><div class="ico">🛡️</div><div class="label">Vérification d'identité</div><span class="chev">✓</span></div>
+          <div class="settings-row"><div class="ico">⛔</div><div class="label">Comptes bloqués</div><span class="chev">›</span></div>
+          <div class="settings-row"><div class="ico">🚩</div><div class="label">Signaler un problème</div><span class="chev">›</span></div>
+
+          <p class="settings-group-label">Aide</p>
+          <div class="settings-row"><div class="ico">💬</div><div class="label">Centre d'aide</div><span class="chev">›</span></div>
+          <div class="settings-row"><div class="ico">📄</div><div class="label">CGU & confidentialité</div><span class="chev">›</span></div>
+
+          <p class="settings-group-label">&nbsp;</p>
+          <div class="settings-row danger"><div class="ico">↩</div><div class="label">Se déconnecter</div></div>
+          <div class="settings-row danger"><div class="ico">✕</div><div class="label">Supprimer mon compte</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="footnote">Meet&nbsp;X — prototype cliquable, v1. Contenus et profils fictifs à but de démonstration.</p>
+</div>
+
+<script>
+  document.querySelectorAll('.tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      document.querySelectorAll('.frame').forEach(f=>f.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.frame).classList.add('active');
+    });
+  });
+
+  document.querySelectorAll('.mini-fav, .result-card .icon-btn, .profile-cta-row .icon-btn.saved, .profile-cta-row .icon-btn:last-child').forEach(el=>{
+    if(el.textContent.trim()==='♡' || el.textContent.trim()==='♥'){
+      el.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        const isSaved = el.classList.toggle('saved');
+        el.textContent = isSaved ? '♥' : '♡';
+      });
+    }
+  });
+
+  document.querySelectorAll('.sort-chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      document.querySelectorAll('.sort-chip').forEach(c=>c.classList.remove('on'));
+      chip.classList.add('on');
+    });
+  });
+
+  document.querySelectorAll('.seg-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.seg-btn').forEach(b=>b.classList.remove('on'));
+      btn.classList.add('on');
+      document.getElementById('pane-selection').style.display = btn.dataset.pane==='pane-selection' ? 'block':'none';
+      document.getElementById('pane-messages').style.display = btn.dataset.pane==='pane-messages' ? 'block':'none';
+    });
+  });
+</script>
+</body>
+</html>
