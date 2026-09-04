@@ -34,7 +34,7 @@ export function MiniCard({ card, badge }: { card: Card; badge?: React.ReactNode 
         <p className="text-[13px] font-semibold">
           {card.first_name}, {card.age}
         </p>
-        <p className="mt-px text-[11px] text-grey">
+        <p className="mt-px truncate text-[11px] text-grey">
           {card.city}
           {card.distanceKm != null && ` · ${formatDistance(card.distanceKm)}`}
         </p>
